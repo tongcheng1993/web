@@ -16,6 +16,11 @@ const buildTree = (arrayList, parent) => {
                 treeVo.path = parent.path + '/' + treeVo.path
             }
             treeVo = buildTree(arrayList, treeVo)
+            if(treeVo.children){
+
+            }else{
+                treeVo.children = []
+            }
             if (parent.children) {
                 parent.children.push(treeVo);
             } else {

@@ -1,50 +1,74 @@
 <template>
     <div>
-        <el-form :model="registerForm" ref="form" class="login-form">
-            <el-form-item>
-                <el-input
-                        prefix-icon="el-icon-user"
-                        type="text"
-                        v-model="registerForm.userName"
-                        clearable
-                        placeholder=""
-                ></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-input
-                        prefix-icon="el-icon-lock"
-                        type="password"
-                        v-model="registerForm.passWord"
-                        clearable
-                        placeholder=""
-                ></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-row>
-                    <el-col :span="12">
-                        <el-input v-model="registerForm.value" placeholder=""></el-input>
-                    </el-col>
-                    <el-col :span="12">
-                        <img
-                                :onload="captchaImgLoad"
-                                :src="captchaImg"
-                                @click="getCaptchaImg"
-                                alt="加载验证码失败"
-                        />
-                    </el-col>
-                </el-row>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="toLoginView">返回登录</el-button>
-                <el-button
-                        :loading="registerSubmitLoad"
-                        type="primary"
-                        @click="registerSubmit"
-                >注册
-                </el-button
-                >
-            </el-form-item>
-        </el-form>
+        <div class="register_form">
+            <el-form :model="registerForm" ref="form" label-width="120px" :label-position="right">
+                <el-form-item label="用户名：">
+                    <el-input
+                            prefix-icon="el-icon-user"
+                            type="text"
+                            v-model="registerForm.userName"
+                            clearable
+                            placeholder=""
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="密码：">
+
+                    <el-input
+                            prefix-icon="el-icon-lock"
+                            type="password"
+                            v-model="registerForm.passWord"
+                            clearable
+                            placeholder=""
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="第二次密码：">
+
+                    <el-input
+                            prefix-icon="el-icon-lock"
+                            type="password"
+                            v-model="registerForm.passWordSec"
+                            clearable
+                            placeholder=""
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="昵称：">
+
+                    <el-input
+                            prefix-icon="el-icon-user-solid"
+                            type="password"
+                            v-model="registerForm.name"
+                            clearable
+                            placeholder=""
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="验证码：">
+
+                    <el-input  prefix-icon="el-icon-picture" v-model="registerForm.value" placeholder=""></el-input>
+
+
+
+                </el-form-item>
+                <el-form-item label="验证码：">
+
+                <img
+                        :onload="captchaImgLoad"
+                        :src="captchaImg"
+                        @click="getCaptchaImg"
+                        alt="加载验证码失败"
+                />
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="toLoginView">返回登录</el-button>
+                    <el-button
+                            :loading="registerSubmitLoad"
+                            type="primary"
+                            @click="registerSubmit"
+                    >注册
+                    </el-button
+                    >
+                </el-form-item>
+            </el-form>
+        </div>
     </div>
 </template>
 
@@ -112,6 +136,8 @@
                 registerForm: {
                     userName: "",
                     passWord: "",
+                    passWordSec:"",
+                    name:"",
                     code: "",
                     value: "",
                 },
@@ -129,4 +155,9 @@
 </script>
 
 <style scoped>
+    .register_form {
+        width: 400px;
+        margin: 0 auto;
+    }
+
 </style>

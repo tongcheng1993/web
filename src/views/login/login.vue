@@ -1,50 +1,49 @@
 <template>
     <div>
-        <el-form :model="loginForm" ref="form" class="login-form">
-            <el-form-item>
-                <el-input
-                        prefix-icon="el-icon-user"
-                        type="text"
-                        v-model="loginForm.userName"
-                        clearable
-                        placeholder=""
-                ></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-input
-                        prefix-icon="el-icon-lock"
-                        type="password"
-                        v-model="loginForm.passWord"
-                        clearable
-                        placeholder=""
-                ></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-row>
-                    <el-col :span="12">
-                        <el-input v-model="loginForm.value" placeholder=""></el-input>
-                    </el-col>
-                    <el-col :span="12">
-                        <img
-                                :onload="captchaImgLoad"
-                                :src="captchaImg"
-                                @click="getCaptchaImg"
-                                alt="加载验证码失败"
-                        />
-                    </el-col>
-                </el-row>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="toRegisterView">注册</el-button>
-                <el-button
-                        :loading="loginSubmitLoad"
-                        type="primary"
-                        @click="loginSubmit"
-                >登录
-                </el-button
-                >
-            </el-form-item>
-        </el-form>
+        <div class="login-form">
+            <el-form :model="loginForm" ref="form" label-width="120px" :label-position="right">
+                <el-form-item label="用户名：">
+                    <el-input
+                            prefix-icon="el-icon-user"
+                            type="text"
+                            v-model="loginForm.userName"
+                            clearable
+                            placeholder=""
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="密码：">
+                    <el-input
+                            prefix-icon="el-icon-lock"
+                            type="password"
+                            v-model="loginForm.passWord"
+                            clearable
+                            placeholder=""
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label="验证码：">
+                    <el-input  prefix-icon="el-icon-picture" v-model="loginForm.value" placeholder=""></el-input>
+                </el-form-item>
+                <el-form-item label="验证码：">
+                    <img
+                            :onload="captchaImgLoad"
+                            :src="captchaImg"
+                            @click="getCaptchaImg"
+                            alt="加载验证码失败"
+                    />
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="toRegisterView">注册</el-button>
+                    <el-button
+                            :loading="loginSubmitLoad"
+                            type="primary"
+                            @click="loginSubmit"
+                    >登录
+                    </el-button
+                    >
+                </el-form-item>
+            </el-form>
+        </div>
+
     </div>
 </template>
 
@@ -130,4 +129,8 @@
 </script>
 
 <style scoped>
+    .login-form {
+        width: 400px;
+        margin: 0 auto;
+    }
 </style>
