@@ -58,7 +58,6 @@ export const get = (url, parameter) => {
         })
     }
 };
-
 export const postJson = (url, parameter) => {
     let token = store.state.token;
     if (token) {
@@ -67,6 +66,7 @@ export const postJson = (url, parameter) => {
             method: 'post',
             data: parameter,
             headers: {
+                'Content-Type':'application/json',
                 'Tc-Token': token
             }
         })
@@ -75,7 +75,9 @@ export const postJson = (url, parameter) => {
             url: url,
             method: 'post',
             data: parameter,
-            headers: {}
+            headers: {
+                'Content-Type':'application/json',
+            }
         })
     }
 };

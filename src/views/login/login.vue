@@ -1,45 +1,25 @@
 <template>
-    <div>
+    <div class="view_div">
         <div class="login-form">
             <el-form :model="loginForm" ref="form" label-width="120px" :label-position="right">
-                <el-form-item label="用户名：">
-                    <el-input
-                            prefix-icon="el-icon-user"
-                            type="text"
-                            v-model="loginForm.userName"
-                            clearable
-                            placeholder=""
-                    ></el-input>
+                <el-form-item label="登陆邮箱：">
+                    <el-input prefix-icon="el-icon-user" type="email" v-model="loginForm.email" clearable placeholder="请输入登陆邮箱"></el-input>
                 </el-form-item>
                 <el-form-item label="密码：">
-                    <el-input
-                            prefix-icon="el-icon-lock"
-                            type="password"
-                            v-model="loginForm.passWord"
-                            clearable
-                            placeholder=""
-                    ></el-input>
+                    <el-input prefix-icon="el-icon-lock" type="password" show-password v-model="loginForm.passWord" clearable placeholder="请输入密码"></el-input>
                 </el-form-item>
                 <el-form-item label="验证码：">
-                    <el-input  prefix-icon="el-icon-picture" v-model="loginForm.value" placeholder=""></el-input>
+                    <el-input prefix-icon="el-icon-picture" v-model="loginForm.value" placeholder="请输入验证码"></el-input>
                 </el-form-item>
                 <el-form-item label="验证码：">
-                    <img
-                            :onload="captchaImgLoad"
-                            :src="captchaImg"
-                            @click="getCaptchaImg"
-                            alt="加载验证码失败"
-                    />
+                    <img width="280px" :onload="captchaImgLoad" :src="captchaImg" @click="getCaptchaImg" alt="加载验证码失败"/>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="toRememberView">找回密码</el-button>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="toRegisterView">注册</el-button>
-                    <el-button
-                            :loading="loginSubmitLoad"
-                            type="primary"
-                            @click="loginSubmit"
-                    >登录
-                    </el-button
-                    >
+                    <el-button :loading="loginSubmitLoad" type="primary" @click="loginSubmit">登录</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -97,6 +77,9 @@
             toRegisterView() {
                 this.toNextPage("/register");
             },
+            toRememberView(){
+                this.toNextPage("/remember");
+            }
         },
         computed: {},
         watch: {},
@@ -113,7 +96,7 @@
                 captchaImg: "",
                 loginSubmitLoad: false,
                 loginForm: {
-                    userName: "",
+                    email: "",
                     passWord: "",
                     code: "",
                     value: "",

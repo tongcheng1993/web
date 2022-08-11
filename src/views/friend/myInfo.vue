@@ -1,93 +1,65 @@
 <template>
     <div>
         <div>
-            <el-row>
-                <el-form :model="friendInfoForm">
-                    <el-col :span="12">
-                        <el-form-item label="头像">
-                            <el-upload
-                                    class="avatar-uploader"
-                                    action="/api/sys/file/uploadFile"
-                                    :headers = "uploadHeader"
-                                    :show-file-list="false"
-                                    :on-success="handleAvatarSuccess"
-                                    :before-upload="beforeAvatarUpload">
-                                <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                            </el-upload>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="昵称">
-                            <el-input v-model="friendInfoForm.name"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="性别">
-                            <el-input v-model="friendInfoForm.sex"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="生日">
-                            <el-input
-                                    v-model="friendInfoForm.birthday"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="宣言">
-                            <el-input v-model="friendInfoForm.info"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="省">
-                            <el-input
-                                    v-model="friendInfoForm.province"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="市">
-                            <el-input v-model="friendInfoForm.city"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="区/县">
-                            <el-input v-model="friendInfoForm.town"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="详细地址">
-                            <el-input v-model="friendInfoForm.addr"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="出生省">
-                            <el-input
-                                    v-model="friendInfoForm.birthProvince"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="出生市">
-                            <el-input
-                                    v-model="friendInfoForm.birthCity"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="出生区/县">
-                            <el-input
-                                    v-model="friendInfoForm.birthTown"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="出生详细地址">
-                            <el-input
-                                    v-model="friendInfoForm.birthAddr"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col>
-                        <el-button @click="saveFriendInfo">确定</el-button>
-                    </el-col>
-                </el-form>
-            </el-row>
+            <el-form :model="friendInfoForm">
+                <el-form-item label="头像">
+                    <el-upload
+                            class="avatar-uploader"
+                            action="/api/sys/file/uploadFile"
+                            :headers="uploadHeader"
+                            :show-file-list="false"
+                            :on-success="handleAvatarSuccess"
+                            :before-upload="beforeAvatarUpload">
+                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item label="昵称">
+                    <el-input v-model="friendInfoForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="性别">
+                    <el-input v-model="friendInfoForm.sex"></el-input>
+                </el-form-item>
+                <el-form-item label="生日">
+                    <el-input
+                            v-model="friendInfoForm.birthday"></el-input>
+                </el-form-item>
+                <el-form-item label="宣言">
+                    <el-input v-model="friendInfoForm.info"></el-input>
+                </el-form-item>
+                <el-form-item label="省">
+                    <el-input
+                            v-model="friendInfoForm.province"></el-input>
+                </el-form-item>
+                <el-form-item label="市">
+                    <el-input v-model="friendInfoForm.city"></el-input>
+                </el-form-item>
+                <el-form-item label="区/县">
+                    <el-input v-model="friendInfoForm.town"></el-input>
+                </el-form-item>
+                <el-form-item label="详细地址">
+                    <el-input v-model="friendInfoForm.addr"></el-input>
+                </el-form-item>
+                <el-form-item label="出生省">
+                    <el-input
+                            v-model="friendInfoForm.birthProvince"></el-input>
+                </el-form-item>
+                <el-form-item label="出生市">
+                    <el-input
+                            v-model="friendInfoForm.birthCity"></el-input>
+                </el-form-item>
+                <el-form-item label="出生区/县">
+                    <el-input
+                            v-model="friendInfoForm.birthTown"></el-input>
+                </el-form-item>
+                <el-form-item label="出生详细地址">
+                    <el-input
+                            v-model="friendInfoForm.birthAddr"></el-input>
+                </el-form-item>
+                <el-form-item label="操作">
+                    <el-button @click="saveFriendInfo">确定</el-button>
+                </el-form-item>
+            </el-form>
         </div>
     </div>
 </template>
@@ -95,20 +67,17 @@
 <script>
     import {
         saveFriendInfo,
-        updateFriendInfo,
         getFriendInfoByMyself,
     } from "../../api/friendApi";
 
     export default {
         name: "myInfo",
         components: {},
-        props: {
-
-        },
+        props: {},
 
         computed: {
-            uploadHeader(){
-                return {"Tc-Token":this.$store.state.token}
+            uploadHeader() {
+                return {"Tc-Token": this.$store.state.token}
             }
         },
         watch: {},
@@ -125,6 +94,7 @@
                 imageUrl: '',
                 friendInfoForm: {
                     id: "",
+                    imgUrl: "",
                     name: "",
                     sex: "",
                     birthday: "",
@@ -143,6 +113,7 @@
             handleAvatarSuccess(res, file) {
                 console.log(file)
                 console.log(res)
+                this.friendInfoForm.imgUrl = res.result
                 this.imageUrl = URL.createObjectURL(file.raw);
             },
             beforeAvatarUpload(file) {
@@ -171,24 +142,17 @@
                 let parameter = {};
                 getFriendInfoByMyself(parameter).then((res) => {
                     this.friendInfoForm = res;
-
-                    let file= new File([res],'',{type: 'image/jpg'})
+                    let file = new File([res], '', {type: 'image/jpg'})
                 });
             },
 
             saveFriendInfo() {
                 let parameter = this.friendInfoForm;
-                if (this.friendInfoForm.id && this.friendInfoForm.id > 0) {
-                    updateFriendInfo(parameter)
-                        .then((res) => {
-                        })
-                        .catch();
-                } else {
-                    saveFriendInfo(parameter)
-                        .then((res) => {
-                        })
-                        .catch();
-                }
+                saveFriendInfo(parameter)
+                    .then((res) => {
+
+                    }).catch();
+
             },
         },
         mounted() {
@@ -208,9 +172,11 @@
         position: relative;
         overflow: hidden;
     }
+
     .avatar-uploader .el-upload:hover {
         border-color: #409EFF;
     }
+
     .avatar-uploader-icon {
         font-size: 28px;
         color: #8c939d;
@@ -219,6 +185,7 @@
         line-height: 178px;
         text-align: center;
     }
+
     .avatar {
         width: 178px;
         height: 178px;

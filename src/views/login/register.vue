@@ -2,70 +2,50 @@
     <div>
         <div class="register_form">
             <el-form :model="registerForm" ref="form" label-width="120px" :label-position="right">
-                <el-form-item label="用户名：">
+                <el-form-item label="注册邮箱：">
                     <el-input
                             prefix-icon="el-icon-user"
-                            type="text"
-                            v-model="registerForm.userName"
+                            type="email"
+                            v-model="registerForm.email"
                             clearable
                             placeholder=""
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="密码：">
-
                     <el-input
                             prefix-icon="el-icon-lock"
                             type="password"
+                            show-password
                             v-model="registerForm.passWord"
                             clearable
                             placeholder=""
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="第二次密码：">
-
                     <el-input
                             prefix-icon="el-icon-lock"
                             type="password"
+                            show-password
                             v-model="registerForm.passWordSec"
                             clearable
                             placeholder=""
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="昵称：">
-
                     <el-input
                             prefix-icon="el-icon-user-solid"
-                            type="password"
+                            type="text"
                             v-model="registerForm.name"
                             clearable
                             placeholder=""
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="验证码：">
-
-                    <el-input  prefix-icon="el-icon-picture" v-model="registerForm.value" placeholder=""></el-input>
-
-
-
-                </el-form-item>
-                <el-form-item label="验证码：">
-
-                <img
-                        :onload="captchaImgLoad"
-                        :src="captchaImg"
-                        @click="getCaptchaImg"
-                        alt="加载验证码失败"
-                />
+                    <el-input prefix-icon="el-icon-picture" v-model="registerForm.value" placeholder=""></el-input><el-button @click="sendEmailCaptcha">发送邮箱验证码</el-button>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="toLoginView">返回登录</el-button>
-                    <el-button
-                            :loading="registerSubmitLoad"
-                            type="primary"
-                            @click="registerSubmit"
-                    >注册
-                    </el-button
-                    >
+                    <el-button :loading="registerSubmitLoad" type="primary" @click="registerSubmit">注册</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -73,7 +53,7 @@
 </template>
 
 <script>
-    import {drawCaptcha, register} from "../../api/userApi";
+    import {sendEmailCaptcha, register} from "../../api/userApi";
 
     export default {
         name: "register",
@@ -87,20 +67,19 @@
                 });
             },
             init() {
-                this.getCaptchaImg();
+
             },
             toLoginView() {
                 this.toNextPage("/login");
             },
-            getCaptchaImg() {
-                this.captchaImgLoad = true;
-                let parameter = {}
-                drawCaptcha(parameter).then((res) => {
-                    this.registerForm.code = res.captchaId;
-                    let url = "data:image/png;base64,";
-                    this.captchaImg = url + res.imgBytes
-                    this.captchaImgLoad = false;
-                })
+            sendEmailCaptcha() {
+                let parameter = this.registerForm
+                sendEmailCaptcha(parameter)
+                    .then((res) => {
+                        if (res) {
+                            this.registerForm.code = res
+                        }
+                    })
             },
             registerSubmit() {
                 this.registerSubmitLoad = true;
@@ -134,10 +113,10 @@
                     orders: [],
                 },
                 registerForm: {
-                    userName: "",
+                    email: "",
                     passWord: "",
-                    passWordSec:"",
-                    name:"",
+                    passWordSec: "",
+                    name: "",
                     code: "",
                     value: "",
                 },
