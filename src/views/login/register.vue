@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="view_div">
         <div class="register_form">
             <el-form :model="registerForm" ref="form" label-width="120px" :label-position="right">
                 <el-form-item label="注册邮箱：">
@@ -41,10 +41,13 @@
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="验证码：">
-                    <el-input prefix-icon="el-icon-picture" v-model="registerForm.value" placeholder=""></el-input><el-button @click="sendEmailCaptcha">发送邮箱验证码</el-button>
+                    <el-input prefix-icon="el-icon-picture" v-model="registerForm.value" placeholder=""></el-input>
+                    <el-button @click="sendRegisterEmailCaptcha">发送注册验证码</el-button>
                 </el-form-item>
-                <el-form-item>
+                <el-form-item label="其他：">
                     <el-button type="primary" @click="toLoginView">返回登录</el-button>
+                </el-form-item>
+                <el-form-item label="操作：">
                     <el-button :loading="registerSubmitLoad" type="primary" @click="registerSubmit">注册</el-button>
                 </el-form-item>
             </el-form>
@@ -53,7 +56,7 @@
 </template>
 
 <script>
-    import {sendEmailCaptcha, register} from "../../api/userApi";
+    import {sendRegisterEmailCaptcha, register} from "../../api/userApi";
 
     export default {
         name: "register",
@@ -72,9 +75,9 @@
             toLoginView() {
                 this.toNextPage("/login");
             },
-            sendEmailCaptcha() {
+            sendRegisterEmailCaptcha() {
                 let parameter = this.registerForm
-                sendEmailCaptcha(parameter)
+                sendRegisterEmailCaptcha(parameter)
                     .then((res) => {
                         if (res) {
                             this.registerForm.code = res

@@ -18,7 +18,7 @@
         overflow: auto;
         background-color: #d9d9d9;
         margin: 0 auto;
-        width: 100%;
+        width: 800px;
         height: 100%;
     }
 

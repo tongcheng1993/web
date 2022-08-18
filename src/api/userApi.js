@@ -16,15 +16,25 @@ export const login = (parameter) => {
     return postJson(url, parameter);
 }
 
+export const sendRegisterEmailCaptcha = (parameter) => {
+    let url = '/api/sys/user/sendRegisterEmailCaptcha';
+    return postJson(url, parameter);
+}
+
 export const register = (parameter) => {
     let url = '/api/sys/user/register';
     return postJson(url, parameter);
 }
-export const sendEmailCaptcha = (parameter) => {
-    let url = '/api/sys/user/sendEmailCaptcha';
+
+export const sendForgetPassWordCaptcha = (parameter) => {
+    let url = '/api/sys/user/sendForgetPassWordCaptcha';
     return postJson(url, parameter);
 }
 
+export const resetForgetPassWord = (parameter) => {
+    let url = '/api/sys/user/resetForgetPassWord';
+    return postJson(url, parameter);
+}
 
 export const getUserInfo = (parameter) => {
     let url = '/api/sys/user/getUserInfo';

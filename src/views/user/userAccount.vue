@@ -5,22 +5,14 @@
                 <el-form>
                     <el-row>
                         <el-col>
-                            <el-form-item label="邮箱">
+                            <el-form-item label="登录邮箱">
                                 <el-input v-model="userInfo.email">
-
                                 </el-input>
-                                <el-button v-if="userInfo.email" @click="emailFormFlag=true">
-                                    完善联系邮箱
-                                </el-button>
-                                <el-button v-else @click="emailFormFlag=true">
-                                    修改联系邮箱
-                                </el-button>
                             </el-form-item>
                         </el-col>
                         <el-col>
                             <el-form-item label="昵称">
                                 <el-input v-model="userInfo.name">
-
                                 </el-input>
                                 <el-button @click="openNameForm()">
                                     修改昵称
@@ -42,29 +34,26 @@
             </el-tab-pane>
             <el-tab-pane v-if="userInfo.peopleId&&userInfo.peopleId>0" label="身份信息" name="second">
                 <el-form>
-                    <el-row>
-                        <el-col>
-                            <el-form-item label="真实姓名">
-                                <el-input v-model="peopleInfo.peopleName">
-
-                                </el-input>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
+                    <el-form-item label="姓名">
+                        <el-input v-model="peopleInfo.peopleName">
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item label="身份证号码">
+                        <el-input v-model="peopleInfo.cardNumber">
+                        </el-input>
+                    </el-form-item>
                 </el-form>
-
             </el-tab-pane>
             <el-tab-pane v-if="userInfo.companyId&&userInfo.companyId>0" label="单位信息" name="three">
                 <el-form>
-                    <el-row>
-                        <el-col>
-                            <el-form-item label="公司名称">
-                                <el-input v-model="companyInfo.companyName">
-
-                                </el-input>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
+                    <el-form-item label="公司名称">
+                        <el-input v-model="companyInfo.companyName">
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item label="统一社会信用代码">
+                        <el-input v-model="companyInfo.deptCode">
+                        </el-input>
+                    </el-form-item>
                 </el-form>
             </el-tab-pane>
         </el-tabs>

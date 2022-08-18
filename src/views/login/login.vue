@@ -1,6 +1,6 @@
 <template>
     <div class="view_div">
-        <div class="login-form">
+        <div class="login_form">
             <el-form :model="loginForm" ref="form" label-width="120px" :label-position="right">
                 <el-form-item label="登陆邮箱：">
                     <el-input prefix-icon="el-icon-user" type="email" v-model="loginForm.email" clearable placeholder="请输入登陆邮箱"></el-input>
@@ -14,11 +14,11 @@
                 <el-form-item label="验证码：">
                     <img width="280px" :onload="captchaImgLoad" :src="captchaImg" @click="getCaptchaImg" alt="加载验证码失败"/>
                 </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="toRememberView">找回密码</el-button>
+                <el-form-item label="其他：">
+                    <el-button type="primary" @click="toForgetPassWordView">忘记密码</el-button>
+                    <el-button type="primary" @click="toRegisterView">去注册</el-button>
                 </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="toRegisterView">注册</el-button>
+                <el-form-item label="操作：">
                     <el-button :loading="loginSubmitLoad" type="primary" @click="loginSubmit">登录</el-button>
                 </el-form-item>
             </el-form>
@@ -77,9 +77,9 @@
             toRegisterView() {
                 this.toNextPage("/register");
             },
-            toRememberView(){
-                this.toNextPage("/remember");
-            }
+            toForgetPassWordView(){
+                this.toNextPage("/forgetPassWord");
+            },
         },
         computed: {},
         watch: {},
@@ -112,7 +112,7 @@
 </script>
 
 <style scoped>
-    .login-form {
+    .login_form {
         width: 400px;
         margin: 0 auto;
     }

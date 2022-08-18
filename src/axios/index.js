@@ -16,17 +16,28 @@ axios.interceptors.response.use(response => {
         if (response.data.success) {
             return response.data.result;
         } else {
-            alert(response.data.message);
+            ELEMENT.Message({
+                showClose: true,
+                message:response.data.message,
+                type: "warning"
+            })
             return Promise.reject(response.data.message)
         }
     } else if (response.data.code === 400) {
+        ELEMENT.Message({
+            showClose: true,
+            message:"登陆时间超时，重新登陆",
+            type: "warning"
+        })
         console.log(response.data.message)
-        alert("登陆时间超时，重新登陆");
-        
         store.commit("del_token");
         window.location.reload();
     } else if (response.data.code === 500) {
-        alert("网络问题");
+        ELEMENT.Message({
+            showClose: true,
+            message:"网络问题",
+            type: "warning"
+        })
         console.log(response.data.message)
         return Promise.reject(response.data.message)
     } else {
