@@ -4,7 +4,7 @@
 // import 'nprogress/nprogress.css'
 import store from '../store/index.js'
 import {getMenu} from '../api/userApi'
-import {createTree} from '../util/treeUtil'
+import {createRouterTree} from '../util/treeUtil'
 
 Vue.use(VueRouter)
 
@@ -127,7 +127,7 @@ router.beforeEach((to, from, next) => {
                     children: []
                 }
                 console.log(res)
-                parent = createTree(res, parent)
+                parent = createRouterTree(res, parent)
                 let menu = []
                 menu.push(parent)
                 let aa = filterAsyncRouter(menu)
@@ -150,7 +150,7 @@ router.beforeEach((to, from, next) => {
                     component: '/layout/container',
                     children: []
                 }
-                parent = createTree(res, parent)
+                parent = createRouterTree(res, parent)
                 let menu = []
                 menu.push(parent)
                 let aa = filterAsyncRouter(menu)
