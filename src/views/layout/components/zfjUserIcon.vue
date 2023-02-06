@@ -59,14 +59,14 @@
                     if (typeof WebSocket === "undefined") {
 
                     } else {
-                        let url = window.location.href;
-                        let host = window.location.host;
-                        let start = url.indexOf("http://") > -1 ? "ws://" : "wss://";
-                        this.socket = new WebSocket(start + host + "/api/websocket/ws?token=" + this.token);
-                        this.socket.onopen = this.open;
-                        this.socket.onclose = this.close;
-                        this.socket.onerror = this.error;
-                        this.socket.onmessage = this.getMessage;
+                        // let url = window.location.href;
+                        // let host = window.location.host;
+                        // let start = url.indexOf("http://") > -1 ? "ws://" : "wss://";
+                        // this.socket = new WebSocket(start + host + "/api/websocket/ws?token=" + this.token);
+                        // this.socket.onopen = this.open;
+                        // this.socket.onclose = this.close;
+                        // this.socket.onerror = this.error;
+                        // this.socket.onmessage = this.getMessage;
                         // this.socket.send()
                     }
                 }

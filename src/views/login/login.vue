@@ -2,8 +2,8 @@
     <div class="view_div">
         <div class="login_form">
             <el-form :model="loginForm" ref="form" label-width="120px" :label-position="right">
-                <el-form-item label="登陆邮箱：">
-                    <el-input prefix-icon="el-icon-user" type="email" v-model="loginForm.email" clearable placeholder="请输入登陆邮箱"></el-input>
+                <el-form-item label="账户名：">
+                    <el-input prefix-icon="el-icon-user" type="text" v-model="loginForm.userName" clearable placeholder="请输入账户名"></el-input>
                 </el-form-item>
                 <el-form-item label="密码：">
                     <el-input prefix-icon="el-icon-lock" type="password" show-password v-model="loginForm.passWord" clearable placeholder="请输入密码"></el-input>
@@ -96,7 +96,7 @@
                 captchaImg: "",
                 loginSubmitLoad: false,
                 loginForm: {
-                    email: "",
+                    userName: "",
                     passWord: "",
                     code: "",
                     value: "",

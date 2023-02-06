@@ -2,23 +2,14 @@
     <div class="view_div">
         <div class="forget_form">
             <el-form :model="forgetForm" ref="form" label-width="120px" :label-position="right">
-                <el-form-item label="登录邮箱：">
+                <el-form-item label="绑定邮箱：">
                     <el-input
-                            prefix-icon="el-icon-user"
-                            type="email"
-                            v-model="forgetForm.email"
-                            clearable
-                            placeholder="请输入邮箱地址"
+                            prefix-icon="el-icon-user" type="email" v-model="forgetForm.email" clearable placeholder="请输入邮箱地址"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="新密码：">
                     <el-input
-                            prefix-icon="el-icon-lock"
-                            type="password"
-                            show-password
-                            v-model="forgetForm.passWord"
-                            clearable
-                            placeholder="请输入新密码"
+                            prefix-icon="el-icon-lock" type="password" show-password v-model="forgetForm.passWord" clearable placeholder="请输入新密码"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="验证码：">
