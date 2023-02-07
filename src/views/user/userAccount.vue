@@ -3,33 +3,43 @@
         <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="账号信息" name="first">
                 <el-form>
-                    <el-row>
-                        <el-col>
-                            <el-form-item label="登录邮箱">
-                                <el-input v-model="userInfo.email">
-                                </el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col>
-                            <el-form-item label="昵称">
-                                <el-input v-model="userInfo.name">
-                                </el-input>
-                                <el-button @click="openNameForm()">
-                                    修改昵称
-                                </el-button>
-                            </el-form-item>
-                        </el-col>
-                        <el-col v-if="!(userInfo.peopleId&&userInfo.peopleId>0)">
-                            <el-form-item label="个人实名">
-                                <el-button @click="">实名认证</el-button>
-                            </el-form-item>
-                        </el-col>
-                        <el-col v-if="!(userInfo.companyId&&userInfo.companyId>0)">
-                            <el-form-item label="单位账号">
-                                <el-button @click="">绑定单位</el-button>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
+                    <el-form-item label="账户名">
+                        <el-input v-model="userInfo.userName">
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item label="密码">
+                        <el-button @click="openNameForm()">
+                            修改密码
+                        </el-button>
+                    </el-form-item>
+                    <el-form-item label="昵称">
+                        <el-input v-model="userInfo.name">
+                        </el-input>
+                        <el-button @click="openNameForm()">
+                            修改昵称
+                        </el-button>
+                    </el-form-item>
+                    <el-form-item label="绑定邮箱">
+                        <el-input v-model="userInfo.email">
+                        </el-input>
+                        <el-button @click="openEmailForm()">
+                            绑定邮箱
+                        </el-button>
+                    </el-form-item>
+                    <el-form-item label="绑定手机号">
+                        <el-input v-model="userInfo.phone">
+                        </el-input>
+                    </el-form-item>
+                    <div v-if="!(userInfo.peopleId&&userInfo.peopleId>0)">
+                        <el-form-item label="个人实名">
+                            <el-button @click="">实名认证</el-button>
+                        </el-form-item>
+                    </div>
+                    <div v-if="!(userInfo.companyId&&userInfo.companyId>0)">
+                        <el-form-item label="单位账号">
+                            <el-button @click="">绑定单位</el-button>
+                        </el-form-item>
+                    </div>
                 </el-form>
             </el-tab-pane>
             <el-tab-pane v-if="userInfo.peopleId&&userInfo.peopleId>0" label="身份信息" name="second">
@@ -71,18 +81,21 @@
         </el-dialog>
         <el-dialog :visible.sync="emailFormFlag" title="邮箱">
             <el-form :model="emailForm" ref="emailForm" label-width="120px" :label-position="right">
+                <el-form-item label="当前账号密码：">
+                    <el-input v-model="emailForm.passWord"></el-input>
+                </el-form-item>
                 <el-form-item label="邮箱：">
                     <el-input v-model="emailForm.email"></el-input>
                 </el-form-item>
                 <el-form-item label="邮箱验证码">
                     <el-input v-model="emailForm.value"></el-input>
-                    <el-button @click="">
+                    <el-button :loading="sendBindEmailCaptchaLoad" @click="sendBindEmailCaptcha()">
                         发送验证码
                     </el-button>
                 </el-form-item>
                 <el-form-item label="操作">
-                    <el-button>
-                        保存
+                    <el-button @click="saveBindEmail()">
+                        绑定邮箱
                     </el-button>
                 </el-form-item>
             </el-form>
@@ -98,7 +111,9 @@
         getPeopleInfo,
         savePeopleInfo,
         getCompanyInfo,
-        saveCompanyInfo
+        saveCompanyInfo,
+        sendBindEmailCaptcha,
+        saveBindEmail
     } from "../../api/userApi";
 
     export default {
@@ -130,8 +145,14 @@
                 activeName: "first",
                 nameFormFlag: false,
                 nameForm: {},
+                sendBindEmailCaptchaLoad: false,
                 emailFormFlag: false,
-                emailForm: {},
+                emailForm: {
+                    passWord:"",
+                    email:"",
+                    redisUuid:"",
+                    value:"",
+                },
                 userInfo: {
                     userName: "",
                     name: "",
@@ -229,6 +250,31 @@
                     })
                     .catch();
             },
+            openEmailForm(){
+                this.emailFormFlag = true
+            },
+            sendBindEmailCaptcha(){
+                this.sendBindEmailCaptchaLoad = true
+                let parameter = this.emailForm
+                sendBindEmailCaptcha(parameter).then((res)=>{
+                    if (res) {
+                        this.emailForm.redisUuid = res
+                        this.sendBindEmailCaptchaLoad = false
+                    }
+                }).catch()
+            },
+            saveBindEmail(){
+                let parameter = this.emailForm
+                saveBindEmail(parameter).then((res)=>{
+                    if (res) {
+                        this.emailForm = {}
+                        this.emailFormFlag = false
+                        this.getUserInfo()
+                    }
+                }).catch()
+
+
+            }
         },
         mounted() {
             this.init()

@@ -2,9 +2,9 @@
     <div class="view_div">
         <div class="forget_form">
             <el-form :model="forgetForm" ref="form" label-width="120px" :label-position="right">
-                <el-form-item label="绑定邮箱：">
+                <el-form-item label="账户名：">
                     <el-input
-                            prefix-icon="el-icon-user" type="email" v-model="forgetForm.email" clearable placeholder="请输入邮箱地址"
+                            prefix-icon="el-icon-user" type="text" v-model="forgetForm.userName" clearable placeholder="请输入账户名"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="新密码：">
@@ -14,13 +14,13 @@
                 </el-form-item>
                 <el-form-item label="验证码：">
                     <el-input prefix-icon="el-icon-picture" v-model="forgetForm.value" placeholder="请输入验证码"></el-input>
-                    <el-button @click="sendForgetPassWordCaptcha()">发送忘记密码验证码</el-button>
+                    <el-button @click="sendForgetPassWordCaptcha()">向绑定邮箱发送验证码</el-button>
                 </el-form-item>
                 <el-form-item label="其他：">
                     <el-button type="primary" @click="toLoginView">返回登录</el-button>
                 </el-form-item>
                 <el-form-item label="操作：">
-                    <el-button :loading="registerSubmitLoad" type="primary" @click="resetForgetPassWord()">修改密码</el-button>
+                    <el-button :loading="registerSubmitLoad" type="primary" @click="resetForgetPassWord()">重置密码</el-button>
                 </el-form-item>
             </el-form>
         </div>

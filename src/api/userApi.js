@@ -64,3 +64,15 @@ export const saveCompanyInfo = (parameter) => {
     let url = '/api/sys/user/apply/saveCompanyInfo';
     return postJson(url, parameter);
 }
+
+export const sendBindEmailCaptcha = (parameter) => {
+    let url = '/api/sys/user/apply/sendBindEmailCaptcha';
+    return postJson(url, parameter);
+}
+
+export const saveBindEmail = (parameter) => {
+    let url = '/api/sys/user/apply/saveBindEmail';
+    return postJson(url, parameter);
+}
+
+

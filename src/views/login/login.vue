@@ -48,7 +48,7 @@
                 this.captchaImgLoad = true;
                 let parameter = {}
                 drawCaptcha(parameter).then((res) => {
-                    this.loginForm.code = res.captchaId;
+                    this.loginForm.redisUuid = res.redisUuid;
                     let url = "data:image/png;base64,";
                     this.captchaImg = url + res.imgBytes
                     this.captchaImgLoad = false;
@@ -98,7 +98,7 @@
                 loginForm: {
                     userName: "",
                     passWord: "",
-                    code: "",
+                    redisUuid: "",
                     value: "",
                 },
             };
