@@ -29,6 +29,9 @@
                     <el-form-item label="绑定手机号">
                         <el-input v-model="userInfo.phone">
                         </el-input>
+                        <el-button @click="openPhoneForm()">
+                            绑定手机号
+                        </el-button>
                     </el-form-item>
                     <div v-if="!(userInfo.peopleId&&userInfo.peopleId>0)">
                         <el-form-item label="个人实名">
@@ -79,6 +82,24 @@
                 </el-form-item>
             </el-form>
         </el-dialog>
+        <el-dialog :visible.sync="passWordFormFlag" title="修改密码">
+            <el-form :model="nameForm" ref="passWordForm" label-width="120px" :label-position="right">
+                <el-form-item label="旧密码：">
+                    <el-input v-model="nameForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="新密码：">
+                    <el-input v-model="nameForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="再一次新密码：">
+                    <el-input v-model="nameForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="操作">
+                    <el-button @click="saveName()">
+                        保存
+                    </el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
         <el-dialog :visible.sync="emailFormFlag" title="邮箱">
             <el-form :model="emailForm" ref="emailForm" label-width="120px" :label-position="right">
                 <el-form-item label="当前账号密码：">
@@ -100,6 +121,27 @@
                 </el-form-item>
             </el-form>
         </el-dialog>
+        <el-dialog :visible.sync="phoneFormFlag" title="手机号">
+            <el-form :model="phoneForm" ref="phoneForm" label-width="120px" :label-position="right">
+                <el-form-item label="当前账号密码：">
+                    <el-input v-model="phoneForm.passWord"></el-input>
+                </el-form-item>
+                <el-form-item label="手机号：">
+                    <el-input v-model="phoneForm.phone"></el-input>
+                </el-form-item>
+                <el-form-item label="手机验证码">
+                    <el-input v-model="phoneForm.value"></el-input>
+                    <el-button :loading="sendBindPhoneCaptchaLoad" @click="sendBindPhoneCaptcha()">
+                        发送验证码
+                    </el-button>
+                </el-form-item>
+                <el-form-item label="操作">
+                    <el-button @click="saveBindPhone()">
+                        绑定手机号
+                    </el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
     </div>
 </template>
 
@@ -113,7 +155,9 @@
         getCompanyInfo,
         saveCompanyInfo,
         sendBindEmailCaptcha,
-        saveBindEmail
+        saveBindEmail,
+        saveBindPhoneCaptcha,
+        saveBindPhone,
     } from "../../api/userApi";
 
     export default {
@@ -143,15 +187,28 @@
                 dataDetailFormTop: "right",
                 dataDetail: {},
                 activeName: "first",
+
                 nameFormFlag: false,
-                nameForm: {},
+                nameForm: {
+                    name: "",
+                },
+                passWordFormFlag: false,
+                passWordForm: {},
                 sendBindEmailCaptchaLoad: false,
                 emailFormFlag: false,
                 emailForm: {
-                    passWord:"",
-                    email:"",
-                    redisUuid:"",
-                    value:"",
+                    passWord: "",
+                    email: "",
+                    redisUuid: "",
+                    value: "",
+                },
+                sendBindPhoneCaptchaLoad: false,
+                phoneFormFlag: false,
+                phoneForm: {
+                    passWord: "",
+                    phone: "",
+                    redisUuid: "",
+                    value: "",
                 },
                 userInfo: {
                     userName: "",
@@ -250,30 +307,51 @@
                     })
                     .catch();
             },
-            openEmailForm(){
+            openEmailForm() {
                 this.emailFormFlag = true
             },
-            sendBindEmailCaptcha(){
+            sendBindEmailCaptcha() {
                 this.sendBindEmailCaptchaLoad = true
                 let parameter = this.emailForm
-                sendBindEmailCaptcha(parameter).then((res)=>{
+                sendBindEmailCaptcha(parameter).then((res) => {
                     if (res) {
                         this.emailForm.redisUuid = res
                         this.sendBindEmailCaptchaLoad = false
                     }
                 }).catch()
             },
-            saveBindEmail(){
+            saveBindEmail() {
                 let parameter = this.emailForm
-                saveBindEmail(parameter).then((res)=>{
+                saveBindEmail(parameter).then((res) => {
                     if (res) {
                         this.emailForm = {}
                         this.emailFormFlag = false
                         this.getUserInfo()
                     }
                 }).catch()
-
-
+            },
+            openPhoneForm() {
+                this.phoneFormFlag = true
+            },
+            sendBindPhoneCaptcha() {
+                this.sendBindPhoneCaptchaLoad = true
+                let parameter = this.phoneForm
+                saveBindPhoneCaptcha(parameter).then((res) => {
+                    if (res) {
+                        this.phoneForm.redisUuid = res
+                        this.sendBindPhoneCaptchaLoad = false
+                    }
+                }).catch()
+            },
+            saveBindPhone() {
+                let parameter = this.phoneForm
+                saveBindPhone(parameter).then((res) => {
+                    if (res) {
+                        this.phoneForm = {}
+                        this.phoneFormFlag = false
+                        this.getUserInfo()
+                    }
+                })
             }
         },
         mounted() {
