@@ -61,8 +61,8 @@ export const saveBindEmail = (parameter) => {
     let url = '/api/sys/user/apply/saveBindEmail';
     return postJson(url, parameter);
 }
-export const saveBindPhoneCaptcha = (parameter) => {
-    let url = '/api/sys/user/apply/saveBindPhoneCaptcha';
+export const sendBindPhoneCaptcha = (parameter) => {
+    let url = '/api/sys/user/apply/sendBindPhoneCaptcha';
     return postJson(url, parameter);
 }
 export const saveBindPhone = (parameter) => {

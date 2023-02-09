@@ -33,19 +33,21 @@
                             绑定手机号
                         </el-button>
                     </el-form-item>
-                    <div v-if="!(userInfo.peopleId&&userInfo.peopleId>0)">
-                        <el-form-item label="个人实名">
-                            <el-button @click="">实名认证</el-button>
-                        </el-form-item>
-                    </div>
-                    <div v-if="!(userInfo.companyId&&userInfo.companyId>0)">
-                        <el-form-item label="单位账号">
-                            <el-button @click="">绑定单位</el-button>
-                        </el-form-item>
+                    <div v-if="!(userInfo.type)">
+                        <div v-if="!(userInfo.peopleId&&userInfo.peopleId>0)">
+                            <el-form-item label="个人实名">
+                                <el-button @click="openPeopleForm()">实名认证</el-button>
+                            </el-form-item>
+                        </div>
+                        <div v-if="!(userInfo.companyId&&userInfo.companyId>0)">
+                            <el-form-item label="单位账号">
+                                <el-button @click="openCompanyForm()">绑定单位</el-button>
+                            </el-form-item>
+                        </div>
                     </div>
                 </el-form>
             </el-tab-pane>
-            <el-tab-pane v-if="userInfo.peopleId&&userInfo.peopleId>0" label="身份信息" name="second">
+            <el-tab-pane v-if='userInfo.type === "1"' label="身份信息" name="second">
                 <el-form>
                     <el-form-item label="姓名">
                         <el-input v-model="peopleInfo.peopleName">
@@ -57,7 +59,7 @@
                     </el-form-item>
                 </el-form>
             </el-tab-pane>
-            <el-tab-pane v-if="userInfo.companyId&&userInfo.companyId>0" label="单位信息" name="three">
+            <el-tab-pane v-if='userInfo.type === "2"' label="单位信息" name="three">
                 <el-form>
                     <el-form-item label="公司名称">
                         <el-input v-model="companyInfo.companyName">
@@ -142,6 +144,37 @@
                 </el-form-item>
             </el-form>
         </el-dialog>
+
+        <el-dialog :visible.sync="peopleFormFlag" title="个人信息">
+            <el-form :model="peopleForm" ref="peopleForm" label-width="120px" :label-position="right">
+                <el-form-item label="姓名：">
+                    <el-input v-model="peopleForm.peopleName"></el-input>
+                </el-form-item>
+                <el-form-item label="身份证：">
+                    <el-input v-model="peopleForm.cardNumber"></el-input>
+                </el-form-item>
+                <el-form-item label="操作">
+                    <el-button @click="savePeopleInfo()">
+                        绑定个人信息
+                    </el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
+        <el-dialog :visible.sync="companyFormFlag" title="单位信息">
+            <el-form :model="companyForm" ref="companyForm" label-width="120px" :label-position="right">
+                <el-form-item label="单位名称：">
+                    <el-input v-model="companyForm.companyName"></el-input>
+                </el-form-item>
+                <el-form-item label="单位统一社会信用代码：">
+                    <el-input v-model="companyForm.deptCode"></el-input>
+                </el-form-item>
+                <el-form-item label="操作">
+                    <el-button @click="saveCompanyInfo()">
+                        绑定单位信息
+                    </el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
     </div>
 </template>
 
@@ -156,7 +189,7 @@
         saveCompanyInfo,
         sendBindEmailCaptcha,
         saveBindEmail,
-        saveBindPhoneCaptcha,
+        sendBindPhoneCaptcha,
         saveBindPhone,
     } from "../../api/userApi";
 
@@ -210,11 +243,20 @@
                     redisUuid: "",
                     value: "",
                 },
+                peopleFormFlag:false,
+                peopleForm:{
+
+                },
+                companyFormFlag:false,
+                companyForm:{
+
+                },
                 userInfo: {
                     userName: "",
                     name: "",
                     email: "",
                     phone: "",
+                    type:"",
                     peopleId: "",
                     companyId: "",
                 },
@@ -263,25 +305,20 @@
             // 初始化数据
             init() {
                 this.getUserInfo();
-                this.queryPageData()
-            },
-            // 查询数据
-            queryPageData() {
-                let parameter = this.dataQo;
+
             },
             getUserInfo() {
                 let parameter = {};
-                getUserInfo(parameter)
-                    .then((res) => {
+                getUserInfo(parameter).then((res) => {
                         this.userInfo = res;
-                        if (this.userInfo.peopleId > 0) {
+                        if (this.userInfo.type === "1") {
                             getPeopleInfo(parameter)
                                 .then((res) => {
                                     this.peopleInfo = res;
                                 })
                                 .catch();
                         }
-                        if (this.userInfo.companyId > 0) {
+                    if (this.userInfo.type === "2") {
                             getCompanyInfo(parameter)
                                 .then((res) => {
                                     this.companyInfo = res;
@@ -336,7 +373,7 @@
             sendBindPhoneCaptcha() {
                 this.sendBindPhoneCaptchaLoad = true
                 let parameter = this.phoneForm
-                saveBindPhoneCaptcha(parameter).then((res) => {
+                sendBindPhoneCaptcha(parameter).then((res) => {
                     if (res) {
                         this.phoneForm.redisUuid = res
                         this.sendBindPhoneCaptchaLoad = false
@@ -351,6 +388,35 @@
                         this.phoneFormFlag = false
                         this.getUserInfo()
                     }
+                })
+            },
+            openPeopleForm(){
+              this.peopleFormFlag = true;
+            },
+            savePeopleInfo(){
+                let parameter = this.peopleForm
+                savePeopleInfo(parameter).then((res)=>{
+                    if(res){
+                        this.peopleFormFlag = false;
+                        window.location.reload();
+                    }
+                }).catch((err)=>{
+
+                })
+            },
+            openCompanyForm(){
+                this.companyFormFlag = true;
+
+            },
+            saveCompanyInfo(){
+                let parameter = this.companyForm
+                saveCompanyInfo(parameter).then((res)=>{
+                    if(res){
+                        this.companyFormFlag = false;
+                        window.location.reload();
+                    }
+                }).catch((err)=>{
+
                 })
             }
         },
