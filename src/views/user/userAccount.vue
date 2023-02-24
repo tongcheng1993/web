@@ -1,6 +1,6 @@
 <template>
     <div class="view_div">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tabs v-model="activeName" @tab-click="handleClick()">
             <el-tab-pane label="账号信息" name="first">
                 <el-form>
                     <el-form-item label="账户名">

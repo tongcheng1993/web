@@ -1,6 +1,7 @@
 // import Vue from 'vue'
 // import Vuex from 'vuex'
 import dicjs from './dic'
+import wsMesjs from './wsMes'
 
 Vue.use(Vuex)
 
@@ -57,5 +58,12 @@ export default new Vuex.Store({
       actions:dicjs.actions,
       getters:dicjs.getters
     },
+    wsMesStore:{
+      namespaced: true,
+      state:wsMesjs.state,
+      mutations:wsMesjs.mutations,
+      actions:wsMesjs.actions,
+      getters:wsMesjs.getters
+    }
   }
 })
