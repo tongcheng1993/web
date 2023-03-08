@@ -56,17 +56,9 @@
         },
         computed: {},
         watch: {
-            page: {
-                handler(newValue, oldValue) {
-                    console.log('new', newValue)
-                    console.log('old', oldValue)
-                },
-                deep: true,
-            },
             menuList: {
                 handler(newValue, oldValue) {
-                    console.log('new', newValue)
-                    console.log('old', oldValue)
+
                 },
                 deep: true,
             },
@@ -104,12 +96,7 @@
         margin-left: 8px;
         margin-top: -3px;
     }
-    /*.el-submenu__icon-arrow {*/
-    /*    position: static;*/
-    /*    vertical-align: middle;*/
-    /*    margin-left: 8px;*/
-    /*    margin-top: -3px;*/
-    /*}*/
+
     .el-menu--horizontal > div > .el-submenu .el-submenu__title {
         height: 60px;
         line-height: 60px;

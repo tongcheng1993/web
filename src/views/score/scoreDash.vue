@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="view_div" :onload="initOnload">
         <div>
             <el-form>
                 <el-row>
@@ -16,24 +16,24 @@
                 </el-row>
             </el-form>
         </div>
-        <div>
-            <score-history>
-
-            </score-history>
-        </div>
     </div>
 </template>
 
 <script>
-    import scoreHistory from './component/scoreHistory'
+
+
     export default {
         name: "scoreDash",
         components: {
-            scoreHistory,
+
         },
         props: {},
         methods: {
             init() {
+                let _that = this
+                _that.initOnload = true;
+
+                _that.initOnload = false;
             },
         },
         computed: {},
@@ -41,6 +41,7 @@
         data() {
             return {
                 name: 'scoreDash',
+                initOnload: false,
 
             }
         },

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="view_div">
         <div class="margin_badge">
             <el-dropdown>
                 <el-badge is-dot class="item" :type="wsFlag">

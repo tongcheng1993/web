@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="view_div">
         <transition name="el-zoom-in-top">
             <router-view/>
         </transition>
@@ -12,12 +12,6 @@
         components: {},
         props: {},
         methods: {
-            async toNextPage(to) {
-                await this.$router.push({
-                    path: to,
-                    params: {}
-                })
-            },
             init() {
             },
         },
@@ -26,13 +20,6 @@
         data() {
             return {
                 name: 'blank',
-                page: {
-                    total: 0,
-                    current: 0,
-                    size: 10,
-                    orders: [],
-                    records: [],
-                },
             }
         },
         mounted() {

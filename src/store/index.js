@@ -21,8 +21,7 @@ export default new Vuex.Store({
       state.menu=[]
       state.token = token;
       sessionStorage.setItem("token",token);
-      console.log(state.menu)
-      console.log(state.token)
+
     },
     del_token(state) {
       state.menu=[]
@@ -39,12 +38,11 @@ export default new Vuex.Store({
       }
     },
     set_menu(state, menu) {
-      console.log(state.menu)
-      console.log(menu)
+
       state.menu = menu;
     },
     del_menu(state){
-      console.log(state.menu)
+
       state.menu=[]
     },
   },

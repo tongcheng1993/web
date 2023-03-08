@@ -63,9 +63,7 @@ function getBoolean(toPath, menuNoToken) {
     let menuFlag = false
     for (let i = 0; i < menuNoToken.length; i++) {
         let menuVo = menuNoToken[i]
-        console.log(toPath)
-        console.log(menuVo.path)
-        console.log(toPath === menuVo.path)
+
         if (toPath === menuVo.path) {
             menuFlag = true
             break
@@ -84,46 +82,20 @@ function getBoolean(toPath, menuNoToken) {
 router.beforeEach((to, from, next) => {
     NProgress.start();
     //先判断路由
-    console.log(to)
-    console.log(from)
 
-    if (store.state.menu.length > 0) {
-        if (store.state.token) {
+    // 有token代表已经登录
+    if (store.state.token) {
+        // 有token，有menu
+        if (store.state.menu.length > 0) {
             next()
         } else {
-            // 游客的所有路由
-            let menuNoToken = []
-            // 后端给与的游客路由
-            menuNoToken = store.state.menu
-            // 前端本身给予的路由
-            for (let i = 0; i < routes.length; i++) {
-                let oneMenu = routes[i]
-                menuNoToken.push(oneMenu)
-            }
-            menuNoToken.push({
-                path: '/'
-            })
-            // 游客请求路由是否是允许的路由 游客只允许进入显示路由 不让查看隐藏路由
-            let menuFlag = false
-            menuFlag = getBoolean(to.path, menuNoToken);
-            if (menuFlag) {
-                next()
-            } else {
-                store.state.toPath = to.path
-                next({
-                    path: '/login',
-                    params: {}
-                });
-            }
-        }
-    } else {
-        if (store.state.token) {
             getMenu({}).then((res) => {
                 let parent = {
                     id: '0',
                     path: '/',
                     name: 'container',
                     component: '/layout/container',
+                    redirect: '/dashboard',
                     children: []
                 }
                 console.log(res)
@@ -140,14 +112,44 @@ router.beforeEach((to, from, next) => {
                 store.commit("set_menu", parent.children)
                 next({...to, replace: true})
             })
+        }
+    } else {
+        if (store.state.menu.length > 0) {
+            // 没有token 但是有游客路由
+            // 游客的所有路由
+            let menuNoToken = []
+            // 后端给与的游客路由
+            menuNoToken = store.state.menu
+            // 前端本身给予的路由
+            for (let i = 0; i < routes.length; i++) {
+                let oneMenu = routes[i]
+                menuNoToken.push(oneMenu)
+            }
+            menuNoToken.push({
+                path: '/'
+            })
+            // 游客请求路由是否是允许的路由 游客只允许进入显示路由 不让查看隐藏路由
+            let menuFlag = false
+            menuFlag = getBoolean(to.path, menuNoToken);
+            // 判断是否可以允许进入
+            if (menuFlag) {
+                next()
+            } else {
+                store.state.toPath = to.path
+                next({
+                    path: '/login',
+                    params: {}
+                });
+            }
         } else {
+            // 没有token 没有路由  获取游客路由
             getMenu({}).then((res) => {
-                console.log(res)
                 let parent = {
                     id: '0',
                     path: '/',
                     name: 'container',
                     component: '/layout/container',
+                    redirect: '/dashboard',
                     children: []
                 }
                 parent = createRouterTree(res, parent)
@@ -162,7 +164,7 @@ router.beforeEach((to, from, next) => {
     }
 });
 
-router.afterEach(() => {
+router.afterEach((to, from) => {
     NProgress.done();
 });
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="view_div">
+    <div class="view_div" :onload="initOnload">
         <el-tabs v-model="activeName" @tab-click="handleClick()">
             <el-tab-pane label="账号信息" name="first">
                 <el-form>
@@ -202,31 +202,19 @@
         data() {
             return {
                 name: "userAccount",
-                page: {
-                    total: 0,
-                    current: 0,
-                    size: 10,
-                    orders: [],
-                    records: [],
-                },
-                dataQo: {
-                    current: 0,
-                    size: 10,
-                    orders: [],
-                },
 
-                dataDetailFlag: false,
-                dataDetailTitle: "",
-                dataDetailFormTop: "right",
-                dataDetail: {},
+                initOnload: false,
+
                 activeName: "first",
 
                 nameFormFlag: false,
                 nameForm: {
                     name: "",
                 },
+
                 passWordFormFlag: false,
                 passWordForm: {},
+
                 sendBindEmailCaptchaLoad: false,
                 emailFormFlag: false,
                 emailForm: {
@@ -235,6 +223,7 @@
                     redisUuid: "",
                     value: "",
                 },
+
                 sendBindPhoneCaptchaLoad: false,
                 phoneFormFlag: false,
                 phoneForm: {
@@ -243,20 +232,18 @@
                     redisUuid: "",
                     value: "",
                 },
-                peopleFormFlag:false,
-                peopleForm:{
 
-                },
-                companyFormFlag:false,
-                companyForm:{
+                peopleFormFlag: false,
+                peopleForm: {},
 
-                },
+                companyFormFlag: false,
+                companyForm: {},
                 userInfo: {
                     userName: "",
                     name: "",
                     email: "",
                     phone: "",
-                    type:"",
+                    type: "",
                     peopleId: "",
                     companyId: "",
                 },
@@ -273,27 +260,9 @@
         // 本页面计算属性
         computed: {},
         // 本页面监听属性
-        watch: {
-            page: {
-                handler(newValue, oldValue) {
-                    console.log('new', newValue)
-                    console.log('old', oldValue)
-                },
-                deep: true,
-            },
-        },
+        watch: {},
 
         methods: {
-            handleSizeChange(val) {
-                console.log(`每页  条`);
-                this.dataQo.size = val;
-                this.queryPageData()
-            },
-            handleCurrentChange(val) {
-                console.log(`当前页: `);
-                this.dataQo.current = val;
-                this.queryPageData()
-            },
             // 跳转页面
             async toNextPage(to) {
                 let parameter = {
@@ -304,31 +273,38 @@
             },
             // 初始化数据
             init() {
-                this.getUserInfo();
+                let _that = this
+                _that.initOnload = true
+                _that.getUserInfo();
+                _that.initOnload = false
 
+            },
+
+            handleClick(tab, event) {
+                console.log(tab, event);
             },
             getUserInfo() {
                 let parameter = {};
                 getUserInfo(parameter).then((res) => {
-                        this.userInfo = res;
-                        if (this.userInfo.type === "1") {
-                            getPeopleInfo(parameter)
-                                .then((res) => {
-                                    this.peopleInfo = res;
-                                })
-                                .catch();
-                        }
-                    if (this.userInfo.type === "2") {
-                            getCompanyInfo(parameter)
-                                .then((res) => {
-                                    this.companyInfo = res;
-                                })
-                                .catch();
-                        }
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
+                    this.userInfo = res;
+                    if (this.userInfo.type === "1") {
+                        getPeopleInfo(parameter).then((res) => {
+                            this.peopleInfo = res;
+                        }).catch((error) => {
+                            console.log(error);
+                        });
+                    } else if (this.userInfo.type === "2") {
+                        getCompanyInfo(parameter).then((res) => {
+                            this.companyInfo = res;
+                        }).catch((error) => {
+                            console.log(error);
+                        });
+                    } else {
+
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                });
             },
             openNameForm() {
                 this.nameFormFlag = true
@@ -390,34 +366,34 @@
                     }
                 })
             },
-            openPeopleForm(){
-              this.peopleFormFlag = true;
+            openPeopleForm() {
+                this.peopleFormFlag = true;
             },
-            savePeopleInfo(){
+            savePeopleInfo() {
                 let parameter = this.peopleForm
-                savePeopleInfo(parameter).then((res)=>{
-                    if(res){
+                savePeopleInfo(parameter).then((res) => {
+                    if (res) {
                         this.peopleFormFlag = false;
                         window.location.reload();
                     }
-                }).catch((err)=>{
+                }).catch((err) => {
 
                 })
             },
-            openCompanyForm(){
+            openCompanyForm() {
                 this.companyFormFlag = true;
 
             },
-            saveCompanyInfo(){
+            saveCompanyInfo() {
                 let parameter = this.companyForm
-                saveCompanyInfo(parameter).then((res)=>{
-                    if(res){
+                saveCompanyInfo(parameter).then((res) => {
+                    if (res) {
                         this.companyFormFlag = false;
                         window.location.reload();
                     }
-                }).catch((err)=>{
-
-                })
+                }).catch((error) => {
+                    console.log(error);
+                });
             }
         },
         mounted() {

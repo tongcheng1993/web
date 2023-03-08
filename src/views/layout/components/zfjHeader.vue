@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="view_div">
         <el-row>
             <el-col :span="4">111</el-col>
             <el-col :span="12">111</el-col>

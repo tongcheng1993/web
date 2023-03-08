@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="view_div">
         {{name}}
     </div>
 </template>
@@ -18,12 +18,6 @@
         data() {
             return {
                 name: 'footer',
-                page: {
-                    total: 0,
-                    current: 0,
-                    size: 10,
-                    orders: []
-                },
             }
         },
         mounted() {

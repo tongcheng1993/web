@@ -3,9 +3,9 @@
         <el-menu
                 mode="horizontal"
                 router
-                @open="handleOpen"
-                @close="handleClose"
-                @select="handleSelect"
+                @open="handleOpen()"
+                @close="handleClose()"
+                @select="handleSelect()"
         >
            <zfj-menu-temple :menuList="menuList"></zfj-menu-temple>
         </el-menu>
@@ -52,12 +52,6 @@
         data() {
             return {
                 name: "headerMenu",
-                page: {
-                    total: 0,
-                    current: 0,
-                    size: 10,
-                    orders: [],
-                },
                 menuList: [],
             };
         },
