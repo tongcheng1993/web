@@ -2,11 +2,11 @@
     <div class="view_div">
         <el-container class="a_container">
             <el-header class="h_container">
-                <ZFJHeader></ZFJHeader>
+                <zfj-header></zfj-header>
             </el-header>
             <el-container class="m_container">
                 <el-header class="h_container">
-                    <ZFJHeaderMenu></ZFJHeaderMenu>
+                    <zfj-header-menu></zfj-header-menu>
                 </el-header>
                 <el-main>
                     <transition name="el-zoom-in-top">
@@ -15,24 +15,24 @@
                 </el-main>
             </el-container>
             <el-footer class="f_container">
-                <ZFJFooter></ZFJFooter>
+                <zfj-footer></zfj-footer>
             </el-footer>
         </el-container>
     </div>
 </template>
 
 <script>
-    import ZFJHeader from './components/zfjHeader'
-    import ZFJHeaderMenu from './components/zfjHeaderMenu'
-    import ZFJFooter from './components/zfjFooter'
+    import zfjHeader from './components/zfjHeader'
+    import zfjHeaderMenu from './components/zfjHeaderMenu'
+    import zfjFooter from './components/zfjFooter'
 
 
     export default {
         name: "container",
         components: {
-            ZFJHeader,
-            ZFJHeaderMenu,
-            ZFJFooter
+            zfjHeader,
+            zfjHeaderMenu,
+            zfjFooter
         },
         props: {},
         methods: {

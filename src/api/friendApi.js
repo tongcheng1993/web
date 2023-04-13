@@ -2,21 +2,21 @@ import {get, postJson} from '../axios'
 
 
 export const saveFriendInfo = (parameter) => {
-    let url = '/api/business/friend/saveFriendInfo';
+    let url = '/api/sys/friend/saveFriendInfo';
     return postJson(url, parameter);
 }
 
 export const getFriendInfoByMyself = (parameter) => {
-    let url = '/api/business/friend/getFriendInfoByMyself';
+    let url = '/api/sys/friend/getFriendInfoByMyself';
     return get(url, parameter);
 }
 
 export const getFriendInfoById = (parameter) => {
-    let url = '/api/business/friend/getFriendInfoById';
+    let url = '/api/sys/friend/getFriendInfoById';
     return get(url, parameter);
 }
 
 export const queryPageFriend = (parameter) => {
-    let url = '/api/business/friend/queryPageFriend';
+    let url = '/api/sys/friend/queryPageFriend';
     return postJson(url, parameter);
 }

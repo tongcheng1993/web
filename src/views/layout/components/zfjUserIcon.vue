@@ -64,7 +64,6 @@
                         _that.wsFlag = "success"
                         _that.stompClient.subscribe('/topic/public', function responseCallback(res) {
                             console.log("/topic/public   res" + res.body)
-                            _that.$store.state.token
                         }, function responseErrCallback(err) {
                             console.log("err" + err)
                         })

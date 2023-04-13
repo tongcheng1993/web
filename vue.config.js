@@ -12,7 +12,6 @@ module.exports = {
             'vue-baidu-map': 'VueBaiduMap',
             "sockjs-client": "SockJS",
             "stompjs": "Stomp",
-            "phaser": "Phaser",
             'echarts': 'echarts',
         },
     },

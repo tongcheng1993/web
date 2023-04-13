@@ -1,16 +1,16 @@
 <template>
-    <div>
+    <div class="view_div" :onload="initOnload">
         <div>
             <el-form :model="friendInfoForm">
                 <el-form-item label="头像">
                     <el-upload
                             class="avatar-uploader"
-                            action="/api/sys/file/uploadFile"
+                            action="/api/sys/friend/uploadFriendInfoImgFile"
                             :headers="uploadHeader"
                             :show-file-list="false"
                             :on-success="handleAvatarSuccess"
                             :before-upload="beforeAvatarUpload">
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        <img v-if="imageUrl" :src="imageUrl" class="avatar" alt="">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                 </el-form-item>
@@ -21,15 +21,13 @@
                     <el-input v-model="friendInfoForm.sex"></el-input>
                 </el-form-item>
                 <el-form-item label="生日">
-                    <el-input
-                            v-model="friendInfoForm.birthday"></el-input>
+                    <el-input v-model="friendInfoForm.birthday"></el-input>
                 </el-form-item>
                 <el-form-item label="宣言">
                     <el-input v-model="friendInfoForm.info"></el-input>
                 </el-form-item>
                 <el-form-item label="省">
-                    <el-input
-                            v-model="friendInfoForm.province"></el-input>
+                    <el-input v-model="friendInfoForm.province"></el-input>
                 </el-form-item>
                 <el-form-item label="市">
                     <el-input v-model="friendInfoForm.city"></el-input>
@@ -41,20 +39,16 @@
                     <el-input v-model="friendInfoForm.addr"></el-input>
                 </el-form-item>
                 <el-form-item label="出生省">
-                    <el-input
-                            v-model="friendInfoForm.birthProvince"></el-input>
+                    <el-input v-model="friendInfoForm.birthProvince"></el-input>
                 </el-form-item>
                 <el-form-item label="出生市">
-                    <el-input
-                            v-model="friendInfoForm.birthCity"></el-input>
+                    <el-input v-model="friendInfoForm.birthCity"></el-input>
                 </el-form-item>
                 <el-form-item label="出生区/县">
-                    <el-input
-                            v-model="friendInfoForm.birthTown"></el-input>
+                    <el-input v-model="friendInfoForm.birthTown"></el-input>
                 </el-form-item>
                 <el-form-item label="出生详细地址">
-                    <el-input
-                            v-model="friendInfoForm.birthAddr"></el-input>
+                    <el-input v-model="friendInfoForm.birthAddr"></el-input>
                 </el-form-item>
                 <el-form-item label="操作">
                     <el-button @click="saveFriendInfo">确定</el-button>
@@ -84,13 +78,6 @@
         data() {
             return {
                 name: "myInfo",
-                page: {
-                    total: 0,
-                    current: 0,
-                    size: 10,
-                    orders: [],
-                    records: [],
-                },
                 imageUrl: '',
                 friendInfoForm: {
                     id: "",
@@ -111,22 +98,21 @@
         },
         methods: {
             handleAvatarSuccess(res, file) {
-                console.log(file)
-                console.log(res)
                 this.friendInfoForm.imgUrl = res.result
                 this.imageUrl = URL.createObjectURL(file.raw);
             },
             beforeAvatarUpload(file) {
-                const isJPG = file.type === 'image/jpeg';
-                const isLt2M = file.size / 1024 / 1024 < 2;
-
-                if (!isJPG) {
-                    this.$message.error('上传头像图片只能是 JPG 格式!');
-                }
-                if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
-                }
-                return isJPG && isLt2M;
+                // const isJPG = file.type === 'image/jpeg';
+                // const isLt2M = file.size / 1024 / 1024 < 2;
+                //
+                // if (!isJPG) {
+                //     this.$message.error('上传头像图片只能是 JPG 格式!');
+                // }
+                // if (!isLt2M) {
+                //     this.$message.error('上传头像图片大小不能超过 2MB!');
+                // }
+                // return isJPG && isLt2M;
+                return true
             },
 
             async toNextPage(to) {
