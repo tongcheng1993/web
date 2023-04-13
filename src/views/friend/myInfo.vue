@@ -59,11 +59,9 @@
 </template>
 
 <script>
-    import {
-        saveFriendInfo,
-        getFriendInfoByMyself,
-    } from "../../api/friendApi";
-
+    import {saveFriendInfo, getFriendInfoByMyself,} from "../../api/friendApi";
+    import {downloadFile,} from "../../api/fileApi";
+    import {resultToBlobUrl} from "../../util/blobUtil"
     export default {
         name: "myInfo",
         components: {},
@@ -127,7 +125,14 @@
                 let parameter = {};
                 getFriendInfoByMyself(parameter).then((res) => {
                     this.friendInfoForm = res;
-                    let file = new File([res], '', {type: 'image/jpg'})
+                    if(this.friendInfoForm.imgUrl){
+                        let parameter = {
+                            id: this.friendInfoForm.imgUrl,
+                        };
+                        downloadFile(parameter).then((res) => {
+                          this.imageUrl=  resultToBlobUrl(res)
+                        })
+                    }
                 });
             },
 

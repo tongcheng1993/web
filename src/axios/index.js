@@ -82,6 +82,30 @@ export const get = (url, parameter) => {
         })
     }
 };
+
+
+export const postForm = (url, parameter) => {
+    let token = store.state.token;
+    if (token) {
+        return axios({
+            url: url,
+            method: 'post',
+            params: parameter,
+            headers: {
+                'Tc-Token': token
+            }
+        })
+    } else {
+        return axios({
+            url: url,
+            method: 'post',
+            params: parameter,
+            headers: {}
+        })
+    }
+};
+
+
 export const postJson = (url, parameter) => {
     let token = store.state.token;
     if (token) {
