@@ -4,19 +4,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta name="keywords" content="社交破圈，博客，出门游玩">
-    <meta name="description" content="利用社交破圈，利用博客展示自己的内容，邀请朋友出门游玩">
+    <meta name="keywords" content="学习">
+    <meta name="description" content="学习">
     <link rel="icon" href="./favicon.ico">
-    <title>
-        <%= htmlWebpackPlugin.options.title %>
-    </title>
-    <link rel="stylesheet" href="./css/index.min.css?v=20220812">
-    <link rel="stylesheet" href="./css/nprogress.min.css?v=20220812">
-    <link rel="stylesheet" href="./css/wangEditor.min.css?v=20220812">
-    <link rel="stylesheet" href="./css/myCss.css?v=20220812">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <link rel="stylesheet" href="./css/index.min.css?v=<%= htmlWebpackPlugin.options.date %>">
+    <link rel="stylesheet" href="./css/nprogress.min.css?v=<%= htmlWebpackPlugin.options.date %>">
+    <link rel="stylesheet" href="./css/wangEditor.min.css?v=<%= htmlWebpackPlugin.options.date %>">
+    <link rel="stylesheet" href="./css/myCss.css?v=<%= htmlWebpackPlugin.options.date %>">
 </head>
 
 <body>
+
 <noscript>
     <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
         Please enable it to continue.</strong>
@@ -26,21 +25,23 @@
         首次加载资源，请稍后
     </div>
 </div>
+
 <!-- built files will be auto injected -->
-<script type="text/javascript" src="./js/vue.min.js?v=20220812"></script>
-<script type="text/javascript" src="./js/vuex.min.js?v=20220812"></script>
-<script type="text/javascript" src="./js/vue-router.min.js?v=20220812"></script>
-<script type="text/javascript" src="./js/axios.min.js?v=20220812"></script>
-<script type="text/javascript" src="./js/index.min.js?v=20220812"></script>
-<script type="text/javascript" src="./js/nprogress.min.js?v=20220812"></script>
-<script type="text/javascript" src="./js/wangEditor.min.js?v=20220812"></script>
-<script type="text/javascript" src="./js/echarts.min.js?v=20220812"></script>
-<script type="text/javascript" src="./js/vue-baidu-map.js?v=20220812"></script>
-<script type="text/javascript" src="./js/sockjs.min.js?v=20220812"></script>
-<script type="text/javascript" src="./js/stomp.min.js?v=20220812"></script>
+<script type="text/javascript" src="./js/vue.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<script type="text/javascript" src="./js/vuex.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<script type="text/javascript" src="./js/vue-router.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<script type="text/javascript" src="./js/axios.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<script type="text/javascript" src="./js/index.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<script type="text/javascript" src="./js/nprogress.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<script type="text/javascript" src="./js/wangEditor.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<script type="text/javascript" src="./js/echarts.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<script type="text/javascript" src="./js/vue-baidu-map.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<script type="text/javascript" src="./js/sockjs.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<script type="text/javascript" src="./js/stomp.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
 <% if (process.env.NODE_ENV=='production' ) { %>
-<!--<script type="text/javascript" src="./js/myJs.js?v=20220812"></script>-->
+<!--<script type="text/javascript" src="./js/myJs.js?v=<%= htmlWebpackPlugin.options.date %>"></script>-->
 <% } %>
 </body>
+
 
 </html>

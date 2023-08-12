@@ -8,30 +8,22 @@
                         </el-input>
                     </el-form-item>
                     <el-form-item label="密码">
-                        <el-button @click="openNameForm()">
-                            修改密码
-                        </el-button>
+                        <el-button @click="openNameForm()">修改密码</el-button>
                     </el-form-item>
                     <el-form-item label="昵称">
                         <el-input v-model="userInfo.name">
                         </el-input>
-                        <el-button @click="openNameForm()">
-                            修改昵称
-                        </el-button>
+                        <el-button @click="openNameForm()">修改昵称</el-button>
                     </el-form-item>
                     <el-form-item label="绑定邮箱">
                         <el-input v-model="userInfo.email">
                         </el-input>
-                        <el-button @click="openEmailForm()">
-                            绑定邮箱
-                        </el-button>
+                        <el-button @click="openEmailForm()">绑定邮箱</el-button>
                     </el-form-item>
                     <el-form-item label="绑定手机号">
                         <el-input v-model="userInfo.phone">
                         </el-input>
-                        <el-button @click="openPhoneForm()">
-                            绑定手机号
-                        </el-button>
+                        <el-button @click="openPhoneForm()">绑定手机号</el-button>
                     </el-form-item>
                     <div v-if="!(userInfo.type)">
                         <div v-if="!(userInfo.peopleId&&userInfo.peopleId>0)">

@@ -1,9 +1,14 @@
 <template>
     <div class="view_div">
         <el-row>
-            <el-col :span="4">111</el-col>
+            <el-col :span="8">
+                <div class="m_img">
+                    <a href="">
+                        <img src="../../../../public/img/dash.jpg" alt="">
+                    </a>
+                </div>
+            </el-col>
             <el-col :span="12">111</el-col>
-            <el-col :span="4">111</el-col>
             <el-col :span="4">
                 <el-row>
                     <el-col :span="6"></el-col>
@@ -22,6 +27,7 @@
 
 <script>
     import zfjUserIcon from './zfjUserIcon'
+
     export default {
         name: "header",
         components: {
@@ -29,14 +35,22 @@
         },
         props: {},
         methods: {
+            async toNextPage(to) {
+                await this.$router.push({
+                    path: to,
+                    params: {},
+                });
+            },
             init() {
             },
+
         },
         computed: {},
         watch: {},
         data() {
             return {
                 name: 'zfjHeader.vue',
+                dash: "../../../../public/img/dash.jpg",
                 page: {
                     total: 0,
                     current: 0,
@@ -54,5 +68,9 @@
 </script>
 
 <style scoped>
-
+    .m_img {
+        height: 61px;
+        width: 100%;
+        overflow: hidden;
+    }
 </style>

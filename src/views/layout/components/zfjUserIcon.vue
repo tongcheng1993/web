@@ -32,6 +32,19 @@
                 console.log(oldValue);
                 console.log(newValue);
             },
+            wsFlag(newValue, oldValue) {
+                console.log(oldValue);
+                console.log(newValue);
+                if ("warning" === newValue) {
+                    console.log("重启ws")
+                    // this.dest()
+                    // this.init()
+                } else if ("success" === newValue) {
+
+                } else {
+
+                }
+            },
         },
         data() {
             return {
@@ -39,6 +52,7 @@
                 stompClient: null,
                 sockjs: null,
                 wsFlag: "warning",
+                tokenFlag: null,
             };
         },
         methods: {
@@ -60,29 +74,41 @@
                     _that.sockjs = new SockJS("/api/websocket/ws?token=" + _that.token);
                     _that.stompClient = Stomp.over(_that.sockjs)
                     _that.stompClient.connect({}, function connectCallback() {
-                        console.log("ws连接成功")
-                        _that.wsFlag = "success"
                         _that.stompClient.subscribe('/topic/public', function responseCallback(res) {
                             console.log("/topic/public   res" + res.body)
+                            alert("/topic/public   res" + res.body)
                         }, function responseErrCallback(err) {
-                            console.log("err" + err)
+                            console.log("responseErrCallback" + err)
                         })
-
-                        _that.sendWsMessage()
+                        _that.stompClient.subscribe("/user/topic/chat", function responseCallback(res) {
+                            console.log("/message   res" + res.body)
+                            alert("/message   res" + res.body)
+                        }, function responseErrCallback(err) {
+                            console.log("responseErrCallback" + err)
+                        })
+                        _that.wsFlag = "success"
+                        console.log("ws连接成功")
                     }, function connectErrCallback() {
-
+                        console.log("connectErrCallback")
+                        console.log(_that.sockjs)
+                        console.log(_that.stompClient)
+                        _that.wsFlag = "warning"
                     })
 
                 }
             },
-            destWs(){
+            destWs() {
                 let _that = this
-                if(this.stompClient){
-                    this.stompClient.disconnect(function (res) {
-                        _that.wsFlag="warning"
-                        console.log("ws关闭")
-                    });
+                if (_that.sockjs) {
+                    if (_that.stompClient) {
+                        _that.stompClient.disconnect(function (res) {
+                            _that.wsFlag = "warning"
+                            console.log(res)
+                            console.log("ws关闭")
+                        });
+                    }
                 }
+
             },
             sendWsMessage() {
                 let parameter = {
@@ -108,7 +134,7 @@
             this.init();
         },
         beforeDestroy() {
-           this.dest()
+            this.dest()
         },
     };
 </script>

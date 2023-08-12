@@ -2,71 +2,71 @@ import {get, postJson} from '../axios'
 
 
 export const getMenu = (parameter) => {
-    let url = '/api/sys/user/apply/getMenu';
-    return get(url, parameter);
+    let url = '/api/business/user/getMenu';
+    return postJson(url, parameter);
 }
 export const drawCaptcha = (parameter) => {
-    let url = '/api/sys/user/apply/drawCaptcha';
-    return get(url, parameter);
+    let url = '/api/business/user/drawCaptcha';
+    return postJson(url, parameter);
 }
 export const register = (parameter) => {
-    let url = '/api/sys/user/apply/register';
+    let url = '/api/business/user/register';
     return postJson(url, parameter);
 }
 export const login = (parameter) => {
-    let url = '/api/sys/user/apply/login';
+    let url = '/api/business/user/login';
     return postJson(url, parameter);
 }
 export const sendRegisterEmailCaptcha = (parameter) => {
-    let url = '/api/sys/user/apply/sendRegisterEmailCaptcha';
+    let url = '/api/business/user/sendRegisterEmailCaptcha';
     return postJson(url, parameter);
 }
 export const sendForgetPassWordCaptcha = (parameter) => {
-    let url = '/api/sys/user/apply/sendForgetPassWordCaptcha';
+    let url = '/api/business/user/sendForgetPassWordCaptcha';
     return postJson(url, parameter);
 }
 export const resetForgetPassWord = (parameter) => {
-    let url = '/api/sys/user/apply/resetForgetPassWord';
+    let url = '/api/business/user/resetForgetPassWord';
     return postJson(url, parameter);
 }
 export const getUserInfo = (parameter) => {
-    let url = '/api/sys/user/apply/getUserInfo';
+    let url = '/api/business/user/getUserInfo';
     return get(url, parameter);
 }
 export const saveName = (parameter) => {
-    let url = '/api/sys/user/apply/saveName';
+    let url = '/api/business/user/saveName';
     return postJson(url, parameter);
 }
 export const getPeopleInfo = (parameter) => {
-    let url = '/api/sys/user/apply/getPeopleInfo';
+    let url = '/api/business/user/getPeopleInfo';
     return get(url, parameter);
 }
 export const savePeopleInfo = (parameter) => {
-    let url = '/api/sys/user/apply/savePeopleInfo';
+    let url = '/api/business/user/savePeopleInfo';
     return postJson(url, parameter);
 }
 export const getCompanyInfo = (parameter) => {
-    let url = '/api/sys/user/apply/getCompanyInfo';
+    let url = '/api/business/user/getCompanyInfo';
     return get(url, parameter);
 }
 export const saveCompanyInfo = (parameter) => {
-    let url = '/api/sys/user/apply/saveCompanyInfo';
+    let url = '/api/business/user/saveCompanyInfo';
     return postJson(url, parameter);
 }
 export const sendBindEmailCaptcha = (parameter) => {
-    let url = '/api/sys/user/apply/sendBindEmailCaptcha';
+    let url = '/api/business/user/sendBindEmailCaptcha';
     return postJson(url, parameter);
 }
 export const saveBindEmail = (parameter) => {
-    let url = '/api/sys/user/apply/saveBindEmail';
+    let url = '/api/business/user/saveBindEmail';
     return postJson(url, parameter);
 }
 export const sendBindPhoneCaptcha = (parameter) => {
-    let url = '/api/sys/user/apply/sendBindPhoneCaptcha';
+    let url = '/api/business/user/sendBindPhoneCaptcha';
     return postJson(url, parameter);
 }
 export const saveBindPhone = (parameter) => {
-    let url = '/api/sys/user/apply/saveBindPhone';
+    let url = '/api/business/user/saveBindPhone';
     return postJson(url, parameter);
 }
 

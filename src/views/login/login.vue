@@ -9,7 +9,7 @@
                     <el-input prefix-icon="el-icon-lock" type="password" show-password v-model="loginForm.passWord" clearable placeholder="请输入密码"></el-input>
                 </el-form-item>
                 <el-form-item label="验证码：">
-                    <el-input prefix-icon="el-icon-picture" v-model="loginForm.value" placeholder="请输入验证码"></el-input>
+                    <el-input prefix-icon="el-icon-picture" v-model="loginForm.redisValue" placeholder="请输入验证码"></el-input>
                 </el-form-item>
                 <el-form-item label="验证码：">
                     <img width="280px" :onload="captchaImgLoad" :src="captchaImg" @click="getCaptchaImg" alt="加载验证码失败"/>
@@ -38,7 +38,7 @@
             async toNextPage(to) {
                 await this.$router.push({
                     path: to,
-                    params: {},
+                    query: {},
                 });
             },
             init() {
@@ -61,6 +61,7 @@
                 login(parameter)
                     .then((res) => {
                         this.$store.commit("set_token", res)
+
                         let toPath = this.$store.state.toPath
                         if (toPath) {
                             this.toNextPage(toPath)
@@ -99,7 +100,7 @@
                     userName: "",
                     passWord: "",
                     redisUuid: "",
-                    value: "",
+                    redisValue: "",
                 },
             };
         },

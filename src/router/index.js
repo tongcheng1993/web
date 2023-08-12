@@ -82,7 +82,6 @@ function getBoolean(toPath, menuNoToken) {
 router.beforeEach((to, from, next) => {
     NProgress.start();
     //先判断路由
-
     // 有token代表已经登录
     if (store.state.token) {
         // 有token，有menu
@@ -98,7 +97,6 @@ router.beforeEach((to, from, next) => {
                     redirect: '/dashboard',
                     children: []
                 }
-                console.log(res)
                 parent = createRouterTree(res, parent)
                 let menu = []
                 menu.push(parent)
@@ -159,6 +157,8 @@ router.beforeEach((to, from, next) => {
                 router.addRoutes(aa)
                 store.commit("set_menu", parent.children)
                 next({...to, replace: true})
+            }).catch((err)=>{
+                console.log(err)
             })
         }
     }
