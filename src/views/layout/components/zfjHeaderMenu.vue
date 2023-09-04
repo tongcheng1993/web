@@ -7,7 +7,7 @@
                 @close="handleClose()"
                 @select="handleSelect()"
         >
-           <zfj-menu-temple :menuList="menuList"></zfj-menu-temple>
+           <zfj-menu-temple :menuList="menu"></zfj-menu-temple>
         </el-menu>
     </div>
 </template>
@@ -20,22 +20,12 @@
         components: {
             zfjMenuTemple,
         },
-        props: {},
+        props: {
+
+        },
         methods: {
             init() {
-                this.menuList = this.$store.state.menu;
-                if (!this.menuList.length) {
-                    this.menuList = [
-                        {
-                            parentId: 0,
-                            name: "首页",
-                            path: "/dashboard",
-                            component: "/dashboard/dashboard",
-                            showFlag: "1",
-                            iconFlag: "1",
-                        },
-                    ]
-                }
+
             },
             handleOpen(key, keyPath) {
             },
@@ -46,13 +36,21 @@
             },
         },
         computed: {
-
+            menu(){
+                return this.$store.state.menu;
+            }
         },
-        watch: {},
+        watch: {
+            menu: {
+                handler(newValue, oldValue) {
+
+                },
+                deep: true,
+            },
+        },
         data() {
             return {
                 name: "headerMenu",
-                menuList: [],
             };
         },
         mounted() {

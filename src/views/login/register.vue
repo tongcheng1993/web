@@ -4,25 +4,25 @@
             <el-form :model="registerForm" ref="form" label-width="120px" :label-position="right">
                 <el-form-item label="账户名：">
                     <el-input
-                            prefix-icon="el-icon-user" type="text" v-model="registerForm.userName" clearable placeholder="请输入账户名"
+                            prefix-icon="el-icon-user" type="text" v-model="registerForm.userName" clearable
+                            placeholder="请输入账户名"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="密码：">
                     <el-input
-                            prefix-icon="el-icon-lock" type="password" show-password v-model="registerForm.passWord" clearable placeholder="请输入密码"
+                            prefix-icon="el-icon-lock" type="password" show-password v-model="registerForm.passWord"
+                            clearable placeholder="请输入密码"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="第二次密码：">
                     <el-input
-                            prefix-icon="el-icon-lock" type="password" show-password v-model="registerForm.passWordSec" clearable placeholder="请再次输入密码"
-                    ></el-input>
-                </el-form-item>
-                <el-form-item label="昵称：">
-                    <el-input prefix-icon="el-icon-user-solid" type="text" v-model="registerForm.name" clearable placeholder="请输入账户昵称"
+                            prefix-icon="el-icon-lock" type="password" show-password v-model="registerForm.passWordSec"
+                            clearable placeholder="请再次输入密码"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="验证码：">
-                    <el-input prefix-icon="el-icon-picture" type="text" v-model="registerForm.value" placeholder="请输入验证码"></el-input>
+                    <el-input prefix-icon="el-icon-picture" type="text" v-model="registerForm.redisValue"
+                              placeholder="请输入验证码"></el-input>
                 </el-form-item>
                 <el-form-item label="验证码：">
                     <img width="280px" :onload="captchaImgLoad" :src="captchaImg" @click="getCaptchaImg" alt="加载验证码失败"/>
@@ -46,10 +46,10 @@
         components: {},
         props: {},
         methods: {
-            async toNextPage(to) {
+            async toNextPage(to, query) {
                 await this.$router.push({
                     path: to,
-                    params: {},
+                    query: query,
                 });
             },
             init() {
@@ -67,7 +67,7 @@
 
             },
             toLoginView() {
-                this.toNextPage("/login");
+                this.toNextPage("/login", {});
             },
             registerSubmit() {
                 this.registerSubmitLoad = true;
@@ -76,10 +76,11 @@
                     .then((res) => {
                         this.$store.commit("set_token", res);
                         let toPath = this.$store.state.toPath
+                        let toPathQuery = this.$store.state.toPathQuery
                         if (toPath) {
-                            this.toNextPage(toPath)
+                            this.toNextPage(toPath, toPathQuery)
                         } else {
-                            this.toNextPage("/")
+                            this.toNextPage("/", {})
                         }
                     })
                     .catch((error) => {

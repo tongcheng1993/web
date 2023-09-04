@@ -31,27 +31,11 @@
                 type: Array,
                 required: true,
                 default: [
-                    {
-                        parentId: 0,
-                        name: "首页",
-                        path: "/dashboard",
-                        component: "/dashboard/dashboard",
-                        showFlag: "1",
-                        iconFlag: "1",
-                    },
                 ],
             },
         },
         methods: {
             init() {
-            },
-            haveOneChildrenShow(children) {
-                for (let i = 0; i < children.length; i++) {
-                    if (children[i].showFlag > 0) {
-                        return true;
-                    }
-                }
-                return false;
             },
         },
         computed: {},

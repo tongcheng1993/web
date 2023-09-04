@@ -8,9 +8,13 @@
     <meta name="description" content="学习">
     <link rel="icon" href="./favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <!--    element ui-->
     <link rel="stylesheet" href="./css/index.min.css?v=<%= htmlWebpackPlugin.options.date %>">
+    <!--    n progress-->
     <link rel="stylesheet" href="./css/nprogress.min.css?v=<%= htmlWebpackPlugin.options.date %>">
+    <!--    wang editor-->
     <link rel="stylesheet" href="./css/wangEditor.min.css?v=<%= htmlWebpackPlugin.options.date %>">
+    <!--    my-->
     <link rel="stylesheet" href="./css/myCss.css?v=<%= htmlWebpackPlugin.options.date %>">
 </head>
 
@@ -27,17 +31,29 @@
 </div>
 
 <!-- built files will be auto injected -->
+<!--vue-->
 <script type="text/javascript" src="./js/vue.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<!--vuex-->
 <script type="text/javascript" src="./js/vuex.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<!--vue router-->
 <script type="text/javascript" src="./js/vue-router.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<!--axios-->
 <script type="text/javascript" src="./js/axios.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<!--element ui-->
 <script type="text/javascript" src="./js/index.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<!--n progress-->
 <script type="text/javascript" src="./js/nprogress.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<!--wang editor-->
 <script type="text/javascript" src="./js/wangEditor.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<!--e charts-->
 <script type="text/javascript" src="./js/echarts.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<!--baidu map-->
 <script type="text/javascript" src="./js/vue-baidu-map.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<!--sockjs-->
 <script type="text/javascript" src="./js/sockjs.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<!--stompjs-->
 <script type="text/javascript" src="./js/stomp.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<!--my-->
 <% if (process.env.NODE_ENV=='production' ) { %>
 <!--<script type="text/javascript" src="./js/myJs.js?v=<%= htmlWebpackPlugin.options.date %>"></script>-->
 <% } %>

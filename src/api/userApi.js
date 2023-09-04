@@ -2,19 +2,19 @@ import {get, postJson} from '../axios'
 
 
 export const getMenu = (parameter) => {
-    let url = '/api/business/user/getMenu';
+    let url = '/api/business/webUser/getMenu';
     return postJson(url, parameter);
 }
 export const drawCaptcha = (parameter) => {
-    let url = '/api/business/user/drawCaptcha';
+    let url = '/api/business/webUser/drawCaptcha';
     return postJson(url, parameter);
 }
 export const register = (parameter) => {
-    let url = '/api/business/user/register';
+    let url = '/api/business/webUser/register';
     return postJson(url, parameter);
 }
 export const login = (parameter) => {
-    let url = '/api/business/user/login';
+    let url = '/api/business/webUser/login';
     return postJson(url, parameter);
 }
 export const sendRegisterEmailCaptcha = (parameter) => {

@@ -7,6 +7,7 @@
                 </el-badge>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item v-if="!token" @click.native="toLoginView()">去登陆</el-dropdown-item>
+                    <el-dropdown-item v-if="token" @click.native="destWs()">destWs</el-dropdown-item>
                     <el-dropdown-item v-if="token" @click.native="toUserInfoView()">账户信息</el-dropdown-item>
                     <el-dropdown-item v-if="token" @click.native="removeToken()">退出系统</el-dropdown-item>
                 </el-dropdown-menu>
@@ -26,33 +27,35 @@
             token() {
                 return this.$store.state.token;
             },
+            wsFlag() {
+                return this.$store.state.wsMesStore.wsFlag;
+            },
+
         },
         watch: {
             token(newValue, oldValue) {
-                console.log(oldValue);
-                console.log(newValue);
+                console.log(oldValue)
+                console.log(newValue)
             },
             wsFlag(newValue, oldValue) {
-                console.log(oldValue);
-                console.log(newValue);
+                console.log(oldValue)
+                console.log(newValue)
                 if ("warning" === newValue) {
-                    console.log("重启ws")
-                    // this.dest()
-                    // this.init()
+                    this.createWs()
                 } else if ("success" === newValue) {
 
                 } else {
 
                 }
+
             },
         },
         data() {
             return {
                 name: "",
-                stompClient: null,
-                sockjs: null,
-                wsFlag: "warning",
-                tokenFlag: null,
+                sockJs: "",
+                stompClient: "",
+
             };
         },
         methods: {
@@ -71,44 +74,53 @@
             createWs() {
                 let _that = this
                 if (_that.token) {
-                    _that.sockjs = new SockJS("/api/websocket/ws?token=" + _that.token);
-                    _that.stompClient = Stomp.over(_that.sockjs)
-                    _that.stompClient.connect({}, function connectCallback() {
-                        _that.stompClient.subscribe('/topic/public', function responseCallback(res) {
-                            console.log("/topic/public   res" + res.body)
-                            alert("/topic/public   res" + res.body)
-                        }, function responseErrCallback(err) {
-                            console.log("responseErrCallback" + err)
+                    if ("warning" === _that.wsFlag) {
+                        _that.sockJs = new SockJS("/api/websocket/ws?token=" + _that.token);
+                        _that.stompClient = Stomp.over(_that.sockJs)
+                        _that.stompClient.connect({}, function connectCallback() {
+                            _that.stompClient.subscribe('/topic/public', function responseCallback(res) {
+                                ELEMENT.Message({
+                                    showClose: true,
+                                    message: "/topic/public   res" + res.body,
+                                    type: "warning"
+                                })
+                            }, function responseErrCallback(err) {
+                                console.log("responseErrCallback" + err)
+                            })
+                            _that.stompClient.subscribe("/user/topic/chat", function responseCallback(res) {
+                                ELEMENT.Message({
+                                    showClose: true,
+                                    message: "/user/topic/chat   res" + res.body,
+                                    type: "warning"
+                                })
+                            }, function responseErrCallback(err) {
+                                console.log("responseErrCallback" + err)
+                            })
+                            _that.wsFlag = "success"
+                            _that.$store.state.wsMesStore.wsFlag = "success"
+                            console.log("ws连接成功")
+                        }, function connectErrCallback() {
+                            console.log("connectErrCallback")
+                            console.log(_that.sockjs)
+                            console.log(_that.stompClient)
+                            _that.wsFlag = "warning"
+                            _that.$store.state.wsMesStore.wsFlag = "warning"
                         })
-                        _that.stompClient.subscribe("/user/topic/chat", function responseCallback(res) {
-                            console.log("/message   res" + res.body)
-                            alert("/message   res" + res.body)
-                        }, function responseErrCallback(err) {
-                            console.log("responseErrCallback" + err)
-                        })
-                        _that.wsFlag = "success"
-                        console.log("ws连接成功")
-                    }, function connectErrCallback() {
-                        console.log("connectErrCallback")
-                        console.log(_that.sockjs)
-                        console.log(_that.stompClient)
-                        _that.wsFlag = "warning"
-                    })
 
+                    }
                 }
             },
             destWs() {
                 let _that = this
-                if (_that.sockjs) {
-                    if (_that.stompClient) {
-                        _that.stompClient.disconnect(function (res) {
-                            _that.wsFlag = "warning"
-                            console.log(res)
-                            console.log("ws关闭")
-                        });
-                    }
+                if ("success" === _that.wsFlag) {
+                    _that.stompClient.disconnect(function (res) {
+                        console.log(res)
+                    });
+                    _that.sockJs.close()
+                    _that.stompClient = null;
+                    _that.sockJs = null;
+                    _that.$store.state.wsMesStore.wsFlag = "warning"
                 }
-
             },
             sendWsMessage() {
                 let parameter = {
@@ -131,9 +143,11 @@
         },
 
         mounted() {
+            console.log('userIcon mounted')
             this.init();
         },
         beforeDestroy() {
+            console.log('userIcon beforeDestroy')
             this.dest()
         },
     };

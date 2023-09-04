@@ -47,9 +47,9 @@ function filterAsyncRouter(asyncRouterMap) {
     asyncRouterMap.filter(route => {
         if (route.component) {
             const str = route.component
-            route.component = resolve => require(['@/views' + str + '.vue'], resolve)
+            route.component = () => import('@/views' + str + '.vue')
         } else {
-            route.component = resolve => require(['@/views/layout/blank.vue'], resolve)
+            route.component = () => import('@/views/layout/blank.vue')
         }
         if (route.children && route.children.length) {
             route.children = filterAsyncRouter(route.children)
@@ -94,7 +94,6 @@ router.beforeEach((to, from, next) => {
                     path: '/',
                     name: 'container',
                     component: '/layout/container',
-                    redirect: '/dashboard',
                     children: []
                 }
                 parent = createRouterTree(res, parent)
@@ -134,10 +133,12 @@ router.beforeEach((to, from, next) => {
                 next()
             } else {
                 store.state.toPath = to.path
+                store.state.toPathQuery = to.query
                 next({
                     path: '/login',
                     params: {}
                 });
+
             }
         } else {
             // 没有token 没有路由  获取游客路由
@@ -147,7 +148,6 @@ router.beforeEach((to, from, next) => {
                     path: '/',
                     name: 'container',
                     component: '/layout/container',
-                    redirect: '/dashboard',
                     children: []
                 }
                 parent = createRouterTree(res, parent)
@@ -157,7 +157,7 @@ router.beforeEach((to, from, next) => {
                 router.addRoutes(aa)
                 store.commit("set_menu", parent.children)
                 next({...to, replace: true})
-            }).catch((err)=>{
+            }).catch((err) => {
                 console.log(err)
             })
         }

@@ -1,7 +1,7 @@
 <template>
     <div class="view_div">
         <transition name="el-zoom-in-top">
-            <router-view/>
+            <router-view :key="$route.fullPath"/>
         </transition>
     </div>
 </template>
@@ -22,11 +22,17 @@
                 name: 'blank',
             }
         },
+        created(){
+            console.log('blank created')
+        },
         mounted() {
-            this.init()
+            console.log('blank mounted')
+            this.init();
         },
         beforeDestroy() {
-        }
+            console.log('blank beforeDestroy')
+
+        },
     }
 </script>
 

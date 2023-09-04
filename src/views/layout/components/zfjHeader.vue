@@ -4,7 +4,7 @@
             <el-col :span="8">
                 <div class="m_img">
                     <a href="">
-                        <img src="../../../../public/img/dash.jpg" alt="">
+                        <img :src="logoImg" alt="">
                     </a>
                 </div>
             </el-col>
@@ -27,7 +27,7 @@
 
 <script>
     import zfjUserIcon from './zfjUserIcon'
-
+    import logoImg from '../../../assets/dash.jpg'
     export default {
         name: "header",
         components: {
@@ -50,7 +50,7 @@
         data() {
             return {
                 name: 'zfjHeader.vue',
-                dash: "../../../../public/img/dash.jpg",
+                logoImg: logoImg,
                 page: {
                     total: 0,
                     current: 0,
