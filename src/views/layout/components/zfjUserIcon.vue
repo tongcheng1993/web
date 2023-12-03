@@ -7,7 +7,6 @@
                 </el-badge>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item v-if="!token" @click.native="toLoginView()">去登陆</el-dropdown-item>
-                    <el-dropdown-item v-if="token" @click.native="destWs()">destWs</el-dropdown-item>
                     <el-dropdown-item v-if="token" @click.native="toUserInfoView()">账户信息</el-dropdown-item>
                     <el-dropdown-item v-if="token" @click.native="removeToken()">退出系统</el-dropdown-item>
                 </el-dropdown-menu>
@@ -17,7 +16,7 @@
 </template>
 
 <script>
-    import {sendWsMessage} from '../../../api/wsApi'
+
 
     export default {
         name: "zfjUserIcon",
@@ -30,6 +29,9 @@
             wsFlag() {
                 return this.$store.state.wsMesStore.wsFlag;
             },
+            wsMessage(){
+                return this.$store.state.wsMesStore.wsMessage;
+            }
 
         },
         watch: {
@@ -41,21 +43,25 @@
                 console.log(oldValue)
                 console.log(newValue)
                 if ("warning" === newValue) {
+                    console.log("this.createWs()")
                     this.createWs()
                 } else if ("success" === newValue) {
 
                 } else {
 
                 }
-
             },
+            wsMessage(newValue, oldValue){
+                console.log(oldValue)
+                console.log(newValue)
+                this.sendWsMessage(newValue);
+            }
         },
         data() {
             return {
                 name: "",
                 sockJs: "",
                 stompClient: "",
-
             };
         },
         methods: {
@@ -66,15 +72,35 @@
                 });
             },
             init() {
+                console.log(this.wsFlag)
                 this.createWs();
             },
             dest() {
                 this.destWs()
             },
+            sendWsMessage(res){
+                let _that = this
+                if (_that.token) {
+                    if ("success" === _that.wsFlag) {
+                        _that.stompClient.send('/app/sendWsMessage',{},JSON.stringify(res))
+                    }
+                }
+            },
             createWs() {
                 let _that = this
                 if (_that.token) {
                     if ("warning" === _that.wsFlag) {
+                        _that.$store.state.wsMesStore.wsFlag = ""
+                        _that.destWs();
+
+                        let url ="";
+                        if(window.location.href.startsWith("https://")){
+                            url= "wss://"+window.location.host+"/api/websocket/ws?token=" + _that.token;
+                        }else{
+                            url= "ws://"+window.location.host+"/api/websocket/ws?token=" + _that.token;
+                        }
+                        console.log(url)
+                        // _that.sockJs = new WebSocket(url);
                         _that.sockJs = new SockJS("/api/websocket/ws?token=" + _that.token);
                         _that.stompClient = Stomp.over(_that.sockJs)
                         _that.stompClient.connect({}, function connectCallback() {
@@ -101,12 +127,11 @@
                             console.log("ws连接成功")
                         }, function connectErrCallback() {
                             console.log("connectErrCallback")
-                            console.log(_that.sockjs)
+                            console.log(_that.sockJs)
                             console.log(_that.stompClient)
                             _that.wsFlag = "warning"
                             _that.$store.state.wsMesStore.wsFlag = "warning"
                         })
-
                     }
                 }
             },
@@ -121,15 +146,16 @@
                     _that.sockJs = null;
                     _that.$store.state.wsMesStore.wsFlag = "warning"
                 }
-            },
-            sendWsMessage() {
-                let parameter = {
-                    "businessType": "1",
-                    "userId": 111,
-                    "obj": "1212"
+                if(_that.stompClient){
+                    _that.stompClient.disconnect(function (res) {
+                        console.log(res)
+                    });
                 }
-                sendWsMessage(parameter).then().catch()
+                if( _that.sockJs){
+                    _that.sockJs.close()
+                }
             },
+
             toUserInfoView() {
                 this.toNextPage("/user/userAccount");
             },

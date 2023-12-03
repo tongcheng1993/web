@@ -3,8 +3,6 @@
 // import NProgress from 'nprogress'
 // import 'nprogress/nprogress.css'
 import store from '../store/index.js'
-import {getMenu} from '../api/userApi'
-import {createRouterTree} from '../util/treeUtil'
 
 Vue.use(VueRouter)
 
@@ -25,7 +23,50 @@ const routes = [
         component: () => import('@/views/login/forgetPassWord.vue'),
     },
     {
-        path: '/lost404',
+        path: '/',
+        name: 'container',
+        component: () => import('@/views/layout/container.vue'),
+        children:[
+            {
+                path: 'user/userAccount',
+                name: 'user/userAccount',
+                component: () => import('@/views/user/userAccount.vue'),
+            },
+            {
+                path: 'dashboard',
+                name: 'dashboard',
+                component: () => import('@/views/dashboard/dashboard.vue'),
+            },
+            {
+                path: 'game',
+                name: 'game',
+                component: () => import('@/views/game/gameList.vue'),
+            },
+            {
+                path: 'friend',
+                name: 'friend',
+                component: () => import('@/views/friend/myFriend.vue'),
+            },
+            {
+                path: 'book',
+                name: 'book',
+                component: () => import('@/views/book/myBookShelf.vue'),
+            },
+            {
+                path: 'book/bookDetail',
+                name: 'book/bookDetail',
+                component: () => import('@/views/book/bookDetail.vue'),
+            },
+            {
+                path: 'book/bookSectionDetail',
+                name: 'book/bookSectionDetail',
+                component: () => import('@/views/book/bookSectionDetail.vue'),
+            },
+        ]
+
+    },
+    {
+        path: '/*',
         name: 'lost404',
         component: () => import('@/views/lost404/lost404.vue')
     }
@@ -43,124 +84,24 @@ const router = new VueRouter({
 })
 
 
-function filterAsyncRouter(asyncRouterMap) {
-    asyncRouterMap.filter(route => {
-        if (route.component) {
-            const str = route.component
-            route.component = () => import('@/views' + str + '.vue')
-        } else {
-            route.component = () => import('@/views/layout/blank.vue')
-        }
-        if (route.children && route.children.length) {
-            route.children = filterAsyncRouter(route.children)
-        }
-        return true
-    })
-    return asyncRouterMap
-}
-
-function getBoolean(toPath, menuNoToken) {
-    let menuFlag = false
-    for (let i = 0; i < menuNoToken.length; i++) {
-        let menuVo = menuNoToken[i]
-
-        if (toPath === menuVo.path) {
-            menuFlag = true
-            break
-        }
-        if (menuVo.children && menuVo.children.length) {
-            let temp = getBoolean(toPath, menuVo.children)
-            if (temp) {
-                menuFlag = true
-                break
-            }
-        }
-    }
-    return menuFlag;
-}
+const whiteList = ['/login', '/register', '/forgetPassWord'];
 
 router.beforeEach((to, from, next) => {
     NProgress.start();
     //先判断路由
     // 有token代表已经登录
     if (store.state.token) {
-        // 有token，有menu
-        if (store.state.menu.length > 0) {
+        next()
+    } else {
+        if (whiteList.indexOf(to.path) !== -1) {
             next()
         } else {
-            getMenu({}).then((res) => {
-                let parent = {
-                    id: '0',
-                    path: '/',
-                    name: 'container',
-                    component: '/layout/container',
-                    children: []
-                }
-                parent = createRouterTree(res, parent)
-                let menu = []
-                menu.push(parent)
-                let aa = filterAsyncRouter(menu)
-                aa.push({
-                    path: '/*',
-                    name: 'lostError',
-                    component: () => import('@/views/lost404/lost404.vue')
-                })
-                router.addRoutes(aa)
-                store.commit("set_menu", parent.children)
-                next({...to, replace: true})
-            })
+            next({
+                path: '/login',
+                params: {}
+            });
         }
-    } else {
-        if (store.state.menu.length > 0) {
-            // 没有token 但是有游客路由
-            // 游客的所有路由
-            let menuNoToken = []
-            // 后端给与的游客路由
-            menuNoToken = store.state.menu
-            // 前端本身给予的路由
-            for (let i = 0; i < routes.length; i++) {
-                let oneMenu = routes[i]
-                menuNoToken.push(oneMenu)
-            }
-            menuNoToken.push({
-                path: '/'
-            })
-            // 游客请求路由是否是允许的路由 游客只允许进入显示路由 不让查看隐藏路由
-            let menuFlag = false
-            menuFlag = getBoolean(to.path, menuNoToken);
-            // 判断是否可以允许进入
-            if (menuFlag) {
-                next()
-            } else {
-                store.state.toPath = to.path
-                store.state.toPathQuery = to.query
-                next({
-                    path: '/login',
-                    params: {}
-                });
 
-            }
-        } else {
-            // 没有token 没有路由  获取游客路由
-            getMenu({}).then((res) => {
-                let parent = {
-                    id: '0',
-                    path: '/',
-                    name: 'container',
-                    component: '/layout/container',
-                    children: []
-                }
-                parent = createRouterTree(res, parent)
-                let menu = []
-                menu.push(parent)
-                let aa = filterAsyncRouter(menu)
-                router.addRoutes(aa)
-                store.commit("set_menu", parent.children)
-                next({...to, replace: true})
-            }).catch((err) => {
-                console.log(err)
-            })
-        }
     }
 });
 

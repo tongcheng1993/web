@@ -1,6 +1,6 @@
 <template>
     <div class="view_div">
-        <div v-loading="initLoading">
+        <div>
             <el-container class="a_container">
                 <el-header class="h_container">
                     <zfj-header></zfj-header>
@@ -58,10 +58,9 @@
         data() {
             return {
                 name: 'container',
-                initLoading: false
             }
         },
-        created(){
+        created() {
             console.log('container created')
         },
         mounted() {

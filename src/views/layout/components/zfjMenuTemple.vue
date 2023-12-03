@@ -5,7 +5,7 @@
                 <el-submenu
                         :index="menu.path"
                         :key="menu.id"
-                        v-if="menu.children && menu.children.length > 0 && haveOneChildrenShow(menu.children)"
+                        v-if="menu.children && menu.children.length > 0 "
                 >
                     <template slot="title"
                     ><i :class="menu.iconFlag"></i

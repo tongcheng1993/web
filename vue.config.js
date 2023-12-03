@@ -34,6 +34,7 @@ module.exports = {
             "sockjs-client": "SockJS",
             "stompjs": "Stomp",
             'echarts': 'echarts',
+            'phaser': 'Phaser',
         },
     },
     devServer: {
@@ -46,7 +47,7 @@ module.exports = {
             '/api': {
                 // 目标 API 地址
                 // 开发环境
-                target: 'http://192.168.0.50:9092',
+                target: 'http://192.168.84.150:9092',
                 // 如果要代理 webSockets
                 ws: true,
                 // 设置跨域

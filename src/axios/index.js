@@ -33,7 +33,7 @@ axios.interceptors.response.use(response => {
         })
         console.log(response.data.message)
         store.commit("del_token");
-        window.location.reload();
+        // window.location.reload();
         return Promise.reject(response.data.message)
     } else if (response.data.code === 40000) {
         ELEMENT.Message({
@@ -43,7 +43,7 @@ axios.interceptors.response.use(response => {
         })
         console.log(response.data.message)
         store.commit("del_token");
-        window.location.reload();
+        // window.location.reload();
         return Promise.reject(response.data.message)
     } else if (response.data.code === 50000) {
         ELEMENT.Message({
@@ -52,7 +52,7 @@ axios.interceptors.response.use(response => {
             type: "warning"
         })
         console.log(response.data.message)
-        window.location.reload();
+        // window.location.reload();
         return Promise.reject(response.data.message)
     } else {
         return Promise.reject(response.data.message)

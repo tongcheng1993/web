@@ -7,7 +7,7 @@
                 @close="handleClose()"
                 @select="handleSelect()"
         >
-           <zfj-menu-temple :menuList="menu"></zfj-menu-temple>
+            <zfj-menu-temple :menuList="menu"></zfj-menu-temple>
         </el-menu>
     </div>
 </template>
@@ -20,9 +20,7 @@
         components: {
             zfjMenuTemple,
         },
-        props: {
-
-        },
+        props: {},
         methods: {
             init() {
 
@@ -35,22 +33,45 @@
 
             },
         },
-        computed: {
-            menu(){
-                return this.$store.state.menu;
-            }
-        },
-        watch: {
-            menu: {
-                handler(newValue, oldValue) {
-
-                },
-                deep: true,
-            },
-        },
+        computed: {},
+        watch: {},
         data() {
             return {
                 name: "headerMenu",
+                menu: [
+                    {
+                        id: "0",
+                        showFlag: 1,
+                        path: "/dashboard",
+                        children: [],
+                        iconFlag: "",
+                        name:"首页"
+                    },
+                    {
+                        id: "1",
+                        showFlag: 1,
+                        path: "/friend",
+                        children: [],
+                        iconFlag: "",
+                        name:"联系人"
+                    },
+                    {
+                        id: "2",
+                        showFlag: 1,
+                        path: "/book",
+                        children: [],
+                        iconFlag: "",
+                        name:"书"
+                    },
+                    {
+                        id: "3",
+                        showFlag: 1,
+                        path: "/game",
+                        children: [],
+                        iconFlag: "",
+                        name:"游戏列表"
+                    },
+                ]
             };
         },
         mounted() {

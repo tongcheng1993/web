@@ -29,9 +29,9 @@ export const resetForgetPassWord = (parameter) => {
     let url = '/api/business/user/resetForgetPassWord';
     return postJson(url, parameter);
 }
-export const getUserInfo = (parameter) => {
-    let url = '/api/business/user/getUserInfo';
-    return get(url, parameter);
+export const getMyselfInfo = (parameter) => {
+    let url = '/api/business/webUser/getMyselfInfo';
+    return postJson(url, parameter);
 }
 export const saveName = (parameter) => {
     let url = '/api/business/user/saveName';

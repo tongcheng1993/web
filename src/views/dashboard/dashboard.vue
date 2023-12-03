@@ -1,6 +1,6 @@
 <template>
     <div class="view_div">
-
+        {{name}}
     </div>
 </template>
 
