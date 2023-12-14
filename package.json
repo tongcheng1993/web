@@ -5,7 +5,7 @@
   "scripts": {
     "pre": "npm install --registry https://registry.npm.taobao.org",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --report"
+    "build": "vue-cli-service build"
   },
   "dependencies": {
     "axios": "^0.21.1",
