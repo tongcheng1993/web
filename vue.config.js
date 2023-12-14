@@ -25,13 +25,13 @@ module.exports = {
             '/api': {
                 // 目标 API 地址
                 // 开发环境
-                target: 'http://192.168.84.150:9092/',
+                target: 'http://www.mytc.tk:15001/',
                 // 如果要代理 webSockets
                 ws: true,
                 // 设置跨域
                 changeOrigin: true,
                 pathRewrite: {
-                    '^/api': ''
+                    '^/api': '/api'
                 }
             }
         },
