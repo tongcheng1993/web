@@ -1,21 +1,43 @@
+const myTime = Date.now() + ""
 module.exports = {
-    productionSourceMap:false,
+    productionSourceMap: false,
+    chainWebpack: config => {
+        config
+            .plugin('html')
+            .tap(args => {
+                args[0].title = '互联网'
+                args[0].date = myTime
+                return args
+            })
+    },
+    css: {
+        extract: {
+            filename: `css/[name].${myTime}.css`,
+            chunkFilename: `css/[name].${myTime}.css`
+        }
+    },
     configureWebpack: {
+        //打包文件重命名，增加时间戳
+        output: {
+            filename: `js/[name].${myTime}.js`,
+            chunkFilename: `js/[name].${myTime}.js`
+        },
         externals: {
             'vue': 'Vue',
             'vuex': 'Vuex',
             'vue-router': 'VueRouter',
             'axios': 'axios',
-            'element-ui':'ELEMENT',
+            'element-ui': 'ELEMENT',
             'nprogress': 'NProgress',
             'wangeditor': 'wangEditor',
             'vue-baidu-map': 'VueBaiduMap',
             "sockjs-client": "SockJS",
             "stompjs": "Stomp",
             'echarts': 'echarts',
+            'phaser': 'Phaser',
         },
     },
-    devServer:{
+    devServer: {
         // 设置主机地址
         host: 'localhost',
         // 设置默认端口

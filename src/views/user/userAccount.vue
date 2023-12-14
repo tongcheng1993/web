@@ -1,37 +1,26 @@
 <template>
-    <div class="view_div" :onload="initOnload">
+    <div class="view_div">
         <el-tabs v-model="activeName" @tab-click="handleClick()">
-            <el-tab-pane label="账号信息" name="first">
+            <el-tab-pane label="账号信息" name="account">
                 <el-form>
                     <el-form-item label="账户名">
-                        <el-input v-model="userInfo.userName">
-                        </el-input>
+                        <el-input v-model="userInfo.userName"></el-input>
                     </el-form-item>
                     <el-form-item label="密码">
-                        <el-button @click="openNameForm()">
-                            修改密码
-                        </el-button>
+                        <el-button @click="openNameForm()">修改密码</el-button>
                     </el-form-item>
                     <el-form-item label="昵称">
-                        <el-input v-model="userInfo.name">
-                        </el-input>
-                        <el-button @click="openNameForm()">
-                            修改昵称
-                        </el-button>
+                        <el-input v-model="userInfo.name"></el-input>
+                        <el-button @click="openNameForm()">修改昵称</el-button>
                     </el-form-item>
                     <el-form-item label="绑定邮箱">
-                        <el-input v-model="userInfo.email">
-                        </el-input>
-                        <el-button @click="openEmailForm()">
-                            绑定邮箱
-                        </el-button>
+                        <el-input v-model="userInfo.email"></el-input>
+                        <el-button @click="openEmailForm()">绑定邮箱</el-button>
                     </el-form-item>
                     <el-form-item label="绑定手机号">
                         <el-input v-model="userInfo.phone">
                         </el-input>
-                        <el-button @click="openPhoneForm()">
-                            绑定手机号
-                        </el-button>
+                        <el-button @click="openPhoneForm()">绑定手机号</el-button>
                     </el-form-item>
                     <div v-if="!(userInfo.type)">
                         <div v-if="!(userInfo.peopleId&&userInfo.peopleId>0)">
@@ -47,7 +36,15 @@
                     </div>
                 </el-form>
             </el-tab-pane>
-            <el-tab-pane v-if='userInfo.type === "1"' label="身份信息" name="second">
+            <el-tab-pane v-if='userInfo.type === "1"' label="身份信息" name="people">
+                <el-form>
+                    <el-form-item  label="昵称">
+                        <el-input v-model="peopleInfo.peopleName">
+                        </el-input>
+                    </el-form-item>
+                </el-form>
+            </el-tab-pane>
+            <el-tab-pane v-if='userInfo.type === "1"' label="身份信息" name="people">
                 <el-form>
                     <el-form-item label="姓名">
                         <el-input v-model="peopleInfo.peopleName">
@@ -59,7 +56,7 @@
                     </el-form-item>
                 </el-form>
             </el-tab-pane>
-            <el-tab-pane v-if='userInfo.type === "2"' label="单位信息" name="three">
+            <el-tab-pane v-if='userInfo.type === "2"' label="单位信息" name="company">
                 <el-form>
                     <el-form-item label="公司名称">
                         <el-input v-model="companyInfo.companyName">
@@ -181,7 +178,7 @@
 <script>
 
     import {
-        getUserInfo,
+        getMyselfInfo,
         saveName,
         getPeopleInfo,
         savePeopleInfo,
@@ -202,10 +199,7 @@
         data() {
             return {
                 name: "userAccount",
-
-                initOnload: false,
-
-                activeName: "first",
+                activeName: "account",
 
                 nameFormFlag: false,
                 nameForm: {
@@ -247,6 +241,9 @@
                     peopleId: "",
                     companyId: "",
                 },
+                friendInfo:{
+
+                },
                 peopleInfo: {
                     peopleName: "",
                     cardNumber: "",
@@ -274,36 +271,25 @@
             // 初始化数据
             init() {
                 let _that = this
-                _that.initOnload = true
-                _that.getUserInfo();
-                _that.initOnload = false
 
+                _that.getMyselfInfo().then((res) => {
+                    if (res) {
+
+                    }
+                });
             },
 
             handleClick(tab, event) {
                 console.log(tab, event);
             },
-            getUserInfo() {
+            getMyselfInfo() {
                 let parameter = {};
-                getUserInfo(parameter).then((res) => {
-                    this.userInfo = res;
-                    if (this.userInfo.type === "1") {
-                        getPeopleInfo(parameter).then((res) => {
-                            this.peopleInfo = res;
-                        }).catch((error) => {
-                            console.log(error);
-                        });
-                    } else if (this.userInfo.type === "2") {
-                        getCompanyInfo(parameter).then((res) => {
-                            this.companyInfo = res;
-                        }).catch((error) => {
-                            console.log(error);
-                        });
-                    } else {
-
-                    }
+                getMyselfInfo(parameter).then((res) => {
+                    console.log(res)
+                    return Promise.resolve(res)
                 }).catch((error) => {
-                    console.log(error);
+                    console.log(error)
+                    return Promise.reject(error)
                 });
             },
             openNameForm() {
@@ -314,7 +300,7 @@
                 saveName(parameter)
                     .then((res) => {
                         if (res) {
-                            this.getUserInfo()
+                            this.getMyselfInfo()
                             this.nameFormFlag = false
                         }
                     })
@@ -339,7 +325,7 @@
                     if (res) {
                         this.emailForm = {}
                         this.emailFormFlag = false
-                        this.getUserInfo()
+                        this.getMyselfInfo()
                     }
                 }).catch()
             },

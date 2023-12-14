@@ -3,13 +3,16 @@
         <div class="login_form">
             <el-form :model="loginForm" ref="form" label-width="120px" :label-position="right">
                 <el-form-item label="账户名：">
-                    <el-input prefix-icon="el-icon-user" type="text" v-model="loginForm.userName" clearable placeholder="请输入账户名"></el-input>
+                    <el-input prefix-icon="el-icon-user" type="text" v-model="loginForm.userName" clearable
+                              placeholder="请输入账户名"></el-input>
                 </el-form-item>
                 <el-form-item label="密码：">
-                    <el-input prefix-icon="el-icon-lock" type="password" show-password v-model="loginForm.passWord" clearable placeholder="请输入密码"></el-input>
+                    <el-input prefix-icon="el-icon-lock" type="password" show-password v-model="loginForm.passWord"
+                              clearable placeholder="请输入密码"></el-input>
                 </el-form-item>
                 <el-form-item label="验证码：">
-                    <el-input prefix-icon="el-icon-picture" v-model="loginForm.value" placeholder="请输入验证码"></el-input>
+                    <el-input prefix-icon="el-icon-picture" v-model="loginForm.redisValue"
+                              placeholder="请输入验证码"></el-input>
                 </el-form-item>
                 <el-form-item label="验证码：">
                     <img width="280px" :onload="captchaImgLoad" :src="captchaImg" @click="getCaptchaImg" alt="加载验证码失败"/>
@@ -35,10 +38,10 @@
         components: {},
         props: {},
         methods: {
-            async toNextPage(to) {
+            async toNextPage(to, query) {
                 await this.$router.push({
                     path: to,
-                    params: {},
+                    query: query,
                 });
             },
             init() {
@@ -62,10 +65,11 @@
                     .then((res) => {
                         this.$store.commit("set_token", res)
                         let toPath = this.$store.state.toPath
+                        let toPathQuery = this.$store.state.toPathQuery
                         if (toPath) {
-                            this.toNextPage(toPath)
+                            this.toNextPage(toPath, toPathQuery)
                         } else {
-                            this.toNextPage("/")
+                            this.toNextPage("/",{})
                         }
                     })
                     .catch((error) => {
@@ -75,10 +79,10 @@
                     });
             },
             toRegisterView() {
-                this.toNextPage("/register");
+                this.toNextPage("/register",{});
             },
-            toForgetPassWordView(){
-                this.toNextPage("/forgetPassWord");
+            toForgetPassWordView() {
+                this.toNextPage("/forgetPassWord",{});
             },
         },
         computed: {},
@@ -99,7 +103,7 @@
                     userName: "",
                     passWord: "",
                     redisUuid: "",
-                    value: "",
+                    redisValue: "",
                 },
             };
         },

@@ -1,10 +1,10 @@
 
 export const createRouterTree = (arrayList, parent) => {
     if (arrayList.length > 0) {
+        return buildRouterTree(arrayList, parent);
     } else {
         return parent
     }
-    return buildRouterTree(arrayList, parent);
 }
 
 

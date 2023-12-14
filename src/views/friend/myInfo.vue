@@ -5,7 +5,7 @@
                 <el-form-item label="头像">
                     <el-upload
                             class="avatar-uploader"
-                            action="/api/sys/friend/uploadFriendInfoImgFile"
+                            action="/api/business/friend/uploadFriendInfoImgFile"
                             :headers="uploadHeader"
                             :show-file-list="false"
                             :on-success="handleAvatarSuccess"
@@ -59,9 +59,9 @@
 </template>
 
 <script>
-    import {saveFriendInfo, getFriendInfoByMyself,} from "../../api/friendApi";
-    import {downloadFile,} from "../../api/fileApi";
+    import {saveFriendInfo, getFriendInfoByMyself, downloadFriendInfoImgFile} from "../../api/friendApi";
     import {resultToBlobUrl} from "../../util/blobUtil"
+
     export default {
         name: "myInfo",
         components: {},
@@ -125,12 +125,12 @@
                 let parameter = {};
                 getFriendInfoByMyself(parameter).then((res) => {
                     this.friendInfoForm = res;
-                    if(this.friendInfoForm.imgUrl){
+                    if (this.friendInfoForm.imgUrl) {
                         let parameter = {
                             id: this.friendInfoForm.imgUrl,
                         };
-                        downloadFile(parameter).then((res) => {
-                          this.imageUrl=  resultToBlobUrl(res)
+                        downloadFriendInfoImgFile(parameter).then((res) => {
+                            this.imageUrl = resultToBlobUrl(res)
                         })
                     }
                 });

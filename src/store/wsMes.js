@@ -1,19 +1,14 @@
 export default {
     state: {
-        topic:{
-
+        wsFlag: "warning",
+        wsMessage: {
+            type: "",
+            data: {}
         },
-        user:{
-
-        }
+        topic: {},
+        user: {}
     },
-    mutations: {
-        setTopic(state, data) {
-            state.topic = data.topic
-        }
-    },
-    actions: {
-
-    },
+    mutations: {},
+    actions: {},
     getters: {}
 }

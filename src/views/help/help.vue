@@ -17,12 +17,12 @@
             init() {
                 this.getHelpContent();
             },
-            getHelpContent(){
+            getHelpContent() {
                 let parameter = {}
                 getHelpContent(parameter)
-                    .then((res)=>{
-                        if(res){
-                            this.html=res
+                    .then((res) => {
+                        if (res) {
+                            this.html = res
                         }
                     })
             },
@@ -32,12 +32,6 @@
         data() {
             return {
                 name: "help",
-                page: {
-                    total: 0,
-                    current: 0,
-                    size: 10,
-                    orders: [],
-                },
                 html: "",
             };
         },

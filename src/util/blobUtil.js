@@ -2,7 +2,7 @@ export function resultToBlobUrl(result) {
     const base64 = 'data:' + result.mimeType + ';base64,' + result.fileByte
     const arr = base64.split(',')
     const mime = arr[0].match(/:(.*?);/)[1]
-    let bstr = atob(arr[1]);
+    let bstr = window.atob(arr[1]);
     let n = bstr.length
     const u8arr = new Uint8Array(n)
     while (n--) {

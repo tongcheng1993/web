@@ -7,7 +7,7 @@
                 @close="handleClose()"
                 @select="handleSelect()"
         >
-           <zfj-menu-temple :menuList="menuList"></zfj-menu-temple>
+            <zfj-menu-temple :menuList="menu"></zfj-menu-temple>
         </el-menu>
     </div>
 </template>
@@ -23,19 +23,7 @@
         props: {},
         methods: {
             init() {
-                this.menuList = this.$store.state.menu;
-                if (!this.menuList.length) {
-                    this.menuList = [
-                        {
-                            parentId: 0,
-                            name: "首页",
-                            path: "/dashboard",
-                            component: "/dashboard/dashboard",
-                            showFlag: "1",
-                            iconFlag: "1",
-                        },
-                    ]
-                }
+
             },
             handleOpen(key, keyPath) {
             },
@@ -45,14 +33,45 @@
 
             },
         },
-        computed: {
-
-        },
+        computed: {},
         watch: {},
         data() {
             return {
                 name: "headerMenu",
-                menuList: [],
+                menu: [
+                    {
+                        id: "0",
+                        showFlag: 1,
+                        path: "/dashboard",
+                        children: [],
+                        iconFlag: "",
+                        name:"首页"
+                    },
+                    {
+                        id: "1",
+                        showFlag: 1,
+                        path: "/friend",
+                        children: [],
+                        iconFlag: "",
+                        name:"联系人"
+                    },
+                    {
+                        id: "2",
+                        showFlag: 1,
+                        path: "/book",
+                        children: [],
+                        iconFlag: "",
+                        name:"书"
+                    },
+                    {
+                        id: "3",
+                        showFlag: 1,
+                        path: "/game",
+                        children: [],
+                        iconFlag: "",
+                        name:"游戏列表"
+                    },
+                ]
             };
         },
         mounted() {

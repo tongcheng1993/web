@@ -16,7 +16,7 @@
 </template>
 
 <script>
-    import {sendWsMessage} from '../../../api/wsApi'
+
 
     export default {
         name: "zfjUserIcon",
@@ -26,19 +26,42 @@
             token() {
                 return this.$store.state.token;
             },
+            wsFlag() {
+                return this.$store.state.wsMesStore.wsFlag;
+            },
+            wsMessage(){
+                return this.$store.state.wsMesStore.wsMessage;
+            }
+
         },
         watch: {
             token(newValue, oldValue) {
-                console.log(oldValue);
-                console.log(newValue);
+                console.log(oldValue)
+                console.log(newValue)
             },
+            wsFlag(newValue, oldValue) {
+                console.log(oldValue)
+                console.log(newValue)
+                if ("warning" === newValue) {
+                    console.log("this.createWs()")
+                    this.createWs()
+                } else if ("success" === newValue) {
+
+                } else {
+
+                }
+            },
+            wsMessage(newValue, oldValue){
+                console.log(oldValue)
+                console.log(newValue)
+                this.sendWsMessage(newValue);
+            }
         },
         data() {
             return {
                 name: "",
-                stompClient: null,
-                sockjs: null,
-                wsFlag: "warning",
+                sockJs: "",
+                stompClient: "",
             };
         },
         methods: {
@@ -49,49 +72,90 @@
                 });
             },
             init() {
+                console.log(this.wsFlag)
                 this.createWs();
             },
             dest() {
                 this.destWs()
             },
+            sendWsMessage(res){
+                let _that = this
+                if (_that.token) {
+                    if ("success" === _that.wsFlag) {
+                        _that.stompClient.send('/app/sendWsMessage',{},JSON.stringify(res))
+                    }
+                }
+            },
             createWs() {
                 let _that = this
                 if (_that.token) {
-                    _that.sockjs = new SockJS("/api/websocket/ws?token=" + _that.token);
-                    _that.stompClient = Stomp.over(_that.sockjs)
-                    _that.stompClient.connect({}, function connectCallback() {
-                        console.log("ws连接成功")
-                        _that.wsFlag = "success"
-                        _that.stompClient.subscribe('/topic/public', function responseCallback(res) {
-                            console.log("/topic/public   res" + res.body)
-                        }, function responseErrCallback(err) {
-                            console.log("err" + err)
+                    if ("warning" === _that.wsFlag) {
+                        _that.$store.state.wsMesStore.wsFlag = ""
+                        _that.destWs();
+
+                        let url ="";
+                        if(window.location.href.startsWith("https://")){
+                            url= "wss://"+window.location.host+"/api/websocket/ws?token=" + _that.token;
+                        }else{
+                            url= "ws://"+window.location.host+"/api/websocket/ws?token=" + _that.token;
+                        }
+                        console.log(url)
+                        // _that.sockJs = new WebSocket(url);
+                        _that.sockJs = new SockJS("/api/websocket/ws?token=" + _that.token);
+                        _that.stompClient = Stomp.over(_that.sockJs)
+                        _that.stompClient.connect({}, function connectCallback() {
+                            _that.stompClient.subscribe('/topic/public', function responseCallback(res) {
+                                ELEMENT.Message({
+                                    showClose: true,
+                                    message: "/topic/public   res" + res.body,
+                                    type: "warning"
+                                })
+                            }, function responseErrCallback(err) {
+                                console.log("responseErrCallback" + err)
+                            })
+                            _that.stompClient.subscribe("/user/topic/chat", function responseCallback(res) {
+                                ELEMENT.Message({
+                                    showClose: true,
+                                    message: "/user/topic/chat   res" + res.body,
+                                    type: "warning"
+                                })
+                            }, function responseErrCallback(err) {
+                                console.log("responseErrCallback" + err)
+                            })
+                            _that.wsFlag = "success"
+                            _that.$store.state.wsMesStore.wsFlag = "success"
+                            console.log("ws连接成功")
+                        }, function connectErrCallback() {
+                            console.log("connectErrCallback")
+                            console.log(_that.sockJs)
+                            console.log(_that.stompClient)
+                            _that.wsFlag = "warning"
+                            _that.$store.state.wsMesStore.wsFlag = "warning"
                         })
-
-                        _that.sendWsMessage()
-                    }, function connectErrCallback() {
-
-                    })
-
+                    }
                 }
             },
-            destWs(){
+            destWs() {
                 let _that = this
-                if(this.stompClient){
-                    this.stompClient.disconnect(function (res) {
-                        _that.wsFlag="warning"
-                        console.log("ws关闭")
+                if ("success" === _that.wsFlag) {
+                    _that.stompClient.disconnect(function (res) {
+                        console.log(res)
+                    });
+                    _that.sockJs.close()
+                    _that.stompClient = null;
+                    _that.sockJs = null;
+                    _that.$store.state.wsMesStore.wsFlag = "warning"
+                }
+                if(_that.stompClient){
+                    _that.stompClient.disconnect(function (res) {
+                        console.log(res)
                     });
                 }
-            },
-            sendWsMessage() {
-                let parameter = {
-                    "businessType": "1",
-                    "userId": 111,
-                    "obj": "1212"
+                if( _that.sockJs){
+                    _that.sockJs.close()
                 }
-                sendWsMessage(parameter).then().catch()
             },
+
             toUserInfoView() {
                 this.toNextPage("/user/userAccount");
             },
@@ -105,10 +169,12 @@
         },
 
         mounted() {
+            console.log('userIcon mounted')
             this.init();
         },
         beforeDestroy() {
-           this.dest()
+            console.log('userIcon beforeDestroy')
+            this.dest()
         },
     };
 </script>
