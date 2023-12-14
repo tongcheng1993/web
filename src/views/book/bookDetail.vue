@@ -21,7 +21,7 @@
 </template>
 
 <script>
-    import {getBookDetail, getBookSectionList} from "./../../api/bookApi"
+    import {queryOneBookById, queryListBookSection} from "./../../api/bookApi"
 
     export default {
         name: "bookDetail",
@@ -56,28 +56,28 @@
                 }
                 this.toNextPage(to, p)
             },
-            getBookDetail() {
+            queryOneBookById() {
                 let p = this.$route.query
                 let pa = {
                     id: p.id
                 }
-                getBookDetail(pa).then(res => {
+                queryOneBookById(pa).then(res => {
                     this.bookDetail = res
                     this.bookDetail.bookImg = "/api/sys/file/downloadStreamFile?id=" + this.bookDetail.bookImg
                 })
             },
-            getBookSectionList() {
+            queryListBookSection() {
                 let p = this.$route.query
                 let pa = {
-                    id: p.id
+                    bookId: p.id
                 }
-                getBookSectionList(pa).then((res) => {
+                queryListBookSection(pa).then((res) => {
                     this.bookSectionList = res
                 })
             },
             init() {
-                this.getBookDetail();
-                this.getBookSectionList()
+                this.queryOneBookById();
+                this.queryListBookSection()
 
 
             }

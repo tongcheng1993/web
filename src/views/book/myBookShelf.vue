@@ -97,7 +97,7 @@
 </template>
 
 <script>
-    import {getMyUploadBook} from '../../api/bookApi'
+    import {queryPageBook} from '../../api/bookApi'
 
     export default {
         name: "myBookShelf",
@@ -143,11 +143,11 @@
             },
             handlewodeshangchuanpageSizeChange(val) {
                 this.wodeshangchuanpage.size = val
-                this.getMyUploadBook();
+                this.queryPageBook();
             },
             handlewodeshangchuanpageCurrentChange(val) {
                 this.wodeshangchuanpage.current = val
-                this.getMyUploadBook();
+                this.queryPageBook();
             },
             toBookDetail(scope) {
                 let p = {
@@ -155,17 +155,17 @@
                 }
                 this.toNextPage('/book/bookDetail', p)
             },
-            getMyUploadBook() {
+            queryPageBook() {
                 let pa = {
                     current: this.wodeshangchuanpage.current,
                     size: this.wodeshangchuanpage.size,
                 }
-                getMyUploadBook(pa).then((res) => {
+                queryPageBook(pa).then((res) => {
                     this.wodeshangchuanpage = res
                 })
             },
             init() {
-                this.getMyUploadBook()
+                this.queryPageBook()
             }
         },
         mounted() {

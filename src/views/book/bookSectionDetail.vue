@@ -2,14 +2,14 @@
     <div class="view_div">
         <div>
             <p v-html="bookSectionDetail.sectionContent"></p>
-            <el-button @click="toBookSectionView(bookSectionDetail.lastId)">上一页</el-button>
-            <el-button @click="toBookSectionView(bookSectionDetail.nextId)">下一页</el-button>
+            <el-button v-if="'0' !== bookSectionDetail.lastId" @click="toBookSectionView(bookSectionDetail.lastId)">上一页</el-button>
+            <el-button v-if="'0' !== bookSectionDetail.nextId" @click="toBookSectionView(bookSectionDetail.nextId)">下一页</el-button>
         </div>
     </div>
 </template>
 
 <script>
-    import {getBookSectionDetail, getLastBookSectionId, getNextBookSectionId} from "./../../api/bookApi"
+    import {queryOneBookSectionById} from "./../../api/bookApi"
 
     export default {
         name: "bookSectionDetail",
@@ -33,18 +33,18 @@
                 this.toNextPage(to, p)
             },
 
-            getBookSectionDetail() {
+            queryOneBookSectionById() {
                 let p = this.$route.query
 
                 let pa = {
                     id: p.id
                 }
-                getBookSectionDetail(pa).then(res => {
+                queryOneBookSectionById(pa).then(res => {
                     this.bookSectionDetail = res
                 })
             },
             init() {
-                this.getBookSectionDetail();
+                this.queryOneBookSectionById();
             },
         },
         data() {
