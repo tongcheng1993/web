@@ -47,13 +47,13 @@ module.exports = {
             '/api': {
                 // 目标 API 地址
                 // 开发环境
-                target: 'https://tongcheng.picp.vip/',
+                target: 'http://192.168.84.99:9092',
                 // 如果要代理 webSockets
                 ws: true,
                 // 设置跨域
                 changeOrigin: true,
                 pathRewrite: {
-                    '^/api': '/api'
+                    '^/api': ''
                 }
             }
         },

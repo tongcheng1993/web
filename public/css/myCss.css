@@ -8,14 +8,14 @@ html, body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, table, td, th, img, div, dl, 
 body {
     background-color: rgb(233, 250, 255);
     color: rgb(85, 85, 85);
-    /*font-family: 宋体, serif;*/
+    font-family: 宋体, serif;
     font-size: 12px;
     margin: 0 auto;
 
     /*overflow: visible;*/
     /*overflow: hidden;*/
     /*overflow: scroll;*/
-    overflow: auto;
+    /* overflow: auto; */
 }
 
 

@@ -5,12 +5,6 @@ import store from '../store/index.js'
 
 axios.defaults.timeout = 150000;
 
-axios.interceptors.request.use(config => {
-        return config;
-    }, error => {
-        return Promise.reject(error)
-    }
-);
 axios.interceptors.response.use(response => {
     if (response.data.code === 20000) {
         // 页面没有提醒 方法有返回内容

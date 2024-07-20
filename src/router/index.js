@@ -8,6 +8,11 @@ Vue.use(VueRouter)
 
 const routes = [
     {
+        path: '/search',
+        name: 'search',
+        component: () => import('@/views/dashboard/dashboard.vue'),
+    },
+    {
         path: '/login',
         name: 'login',
         component: () => import('@/views/login/login.vue'),
@@ -84,7 +89,7 @@ const router = new VueRouter({
 })
 
 
-const whiteList = ['/login', '/register', '/forgetPassWord'];
+const whiteList = ['/search','/login', '/register', '/forgetPassWord'];
 
 router.beforeEach((to, from, next) => {
     NProgress.start();
@@ -97,7 +102,7 @@ router.beforeEach((to, from, next) => {
             next()
         } else {
             next({
-                path: '/login',
+                path: '/search',
                 params: {}
             });
         }
