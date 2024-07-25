@@ -45,7 +45,7 @@ axios.interceptors.response.use(response => {
             message: "网络问题",
             type: "warning"
         })
-        console.log(response.data.message)
+        // store.commit("del_token");
         // window.location.reload();
         return Promise.reject(response.data.message)
     } else {
