@@ -55,6 +55,8 @@
                     let url = "data:image/png;base64,";
                     this.captchaImg = url + res.imgBytes
                     this.captchaImgLoad = false;
+                }).catch(err=>{
+
                 })
 
             },

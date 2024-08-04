@@ -272,11 +272,7 @@
             init() {
                 let _that = this
 
-                _that.getMyselfInfo().then((res) => {
-                    if (res) {
-
-                    }
-                });
+                _that.getMyselfInfo();
             },
 
             handleClick(tab, event) {
@@ -286,10 +282,10 @@
                 let parameter = {};
                 getMyselfInfo(parameter).then((res) => {
                     console.log(res)
-                    return Promise.resolve(res)
+                   
                 }).catch((error) => {
                     console.log(error)
-                    return Promise.reject(error)
+                  
                 });
             },
             openNameForm() {

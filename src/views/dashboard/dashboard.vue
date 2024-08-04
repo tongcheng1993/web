@@ -1,23 +1,32 @@
 <template>
     <div class="view_div">
-        <div v-if="page.records.length === 0">
-            <div v-if="!token">
-                <el-button @click="toLogin">
-                    去登陆1
-                </el-button>
-            </div>
-            <div>
-                <el-input v-model="page.key" placeholder="请输入内容"></el-input>
-                <el-button>搜索</el-button>
-            </div>
+        <div v-if="!token">
+            <el-button @click="toLogin">
+                去登陆
+            </el-button>
+        </div>
+        <div>
+            <el-input v-model="page.key" placeholder="请输入内容"></el-input>
+            <el-button @click="queryPageData">搜索</el-button>
         </div>
         <div v-if="page.records.length > 0">
-            <div v-if="!token">
-                <el-button @click="toLogin">
-                    去登陆2
-                </el-button>
-            </div>
+            <el-table ref="dataTable" :data="page.records" v-loading="tableLoading" @row-click="openDetail"
+                :show-header="false">
+
+                <el-table-column>
+                    <template slot-scope="scope">
+                        {{ scope.row.title }} |{{ scope.row.note }}
+                    </template>
+                </el-table-column>
+
+            </el-table>
+            <!--        分页组件-->
+            <el-pagination layout="total, sizes, prev, pager, next, jumper" :total="page.total" :page-size="page.size"
+                @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page.current"
+                :page-sizes="[20, 50, 100]">
+            </el-pagination>
         </div>
+
 
     </div>
 </template>
@@ -51,11 +60,16 @@ export default {
             tableLoading: false,
             page: {
                 total: 0,
-                current: 0,
+                current: 1,
                 size: 20,
                 orders: [],
-                records: [],
-                key: "默认",
+                records: [
+                    {
+                        title: "标题",
+                        path: "http://www.baidu.com",
+                    }
+                ],
+                key: "",
 
             },
         };
@@ -67,9 +81,28 @@ export default {
                 query: query,
             });
         },
+        // 修改页容量
+        handleSizeChange(val) {
+            this.page.size = val
+            this.queryPageData();
+        },
+        // 修改当前页
+        handleCurrentChange(val) {
+            this.page.current = val
+            this.queryPageData();
+        },
+        // 分页查询
+        queryPageData() {
+
+
+        },
+
         toLogin() {
             let to = "/login"
             this.toNextPage(to)
+        },
+        openDetail() {
+
         },
     },
 

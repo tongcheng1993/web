@@ -16,7 +16,9 @@
 
                     </el-col>
                     <el-col :span="6">
-                        <zfj-user-icon></zfj-user-icon>
+                        <div class="user">
+                            <zfj-user-icon></zfj-user-icon>
+                        </div>
                     </el-col>
                     <el-col :span="6"></el-col>
                 </el-row>
@@ -26,51 +28,55 @@
 </template>
 
 <script>
-    import zfjUserIcon from './zfjUserIcon'
-    import logoImg from '../../../assets/dash.jpg'
-    export default {
-        name: "header",
-        components: {
-            zfjUserIcon,
+import zfjUserIcon from './zfjUserIcon'
+import logoImg from '../../../assets/dash.jpg'
+export default {
+    name: "header",
+    components: {
+        zfjUserIcon,
+    },
+    props: {},
+    methods: {
+        async toNextPage(to) {
+            await this.$router.push({
+                path: to,
+                params: {},
+            });
         },
-        props: {},
-        methods: {
-            async toNextPage(to) {
-                await this.$router.push({
-                    path: to,
-                    params: {},
-                });
-            },
-            init() {
-            },
+        init() {
+        },
 
-        },
-        computed: {},
-        watch: {},
-        data() {
-            return {
-                name: 'zfjHeader.vue',
-                logoImg: logoImg,
-                page: {
-                    total: 0,
-                    current: 0,
-                    size: 10,
-                    orders: []
-                },
-            }
-        },
-        mounted() {
-            this.init()
-        },
-        beforeDestroy() {
+    },
+    computed: {},
+    watch: {},
+    data() {
+        return {
+            name: 'zfjHeader.vue',
+            logoImg: logoImg,
+            page: {
+                total: 0,
+                current: 0,
+                size: 10,
+                orders: []
+            },
         }
+    },
+    mounted() {
+        this.init()
+    },
+    beforeDestroy() {
     }
+}
 </script>
 
 <style scoped>
-    .m_img {
-        height: 61px;
-        width: 100%;
-        overflow: hidden;
-    }
+.m_img {
+    height: 61px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.user {
+    margin: 8px;
+}
 </style>

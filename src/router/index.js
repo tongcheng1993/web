@@ -30,18 +30,28 @@ const routes = [
     {
         path: '/',
         name: 'container',
+        redirect: '/dashboard',
         component: () => import('@/views/layout/container.vue'),
-        children:[
-            {
-                path: 'user/userAccount',
-                name: 'user/userAccount',
-                component: () => import('@/views/user/userAccount.vue'),
-            },
+        children: [
+            
             {
                 path: 'dashboard',
                 name: 'dashboard',
                 component: () => import('@/views/dashboard/dashboard.vue'),
             },
+            {
+                path: 'user',
+                name: 'user',
+                component: () => import('@/views/layout/blank.vue'),
+                children: [
+                    {
+                        path: 'userAccount',
+                        name: 'userAccount',
+                        component: () => import('@/views/user/userAccount.vue'),
+                    },
+                ]
+            },
+           
             {
                 path: 'game',
                 name: 'game',
@@ -89,7 +99,7 @@ const router = new VueRouter({
 })
 
 
-const whiteList = ['/search','/login', '/register', '/forgetPassWord'];
+const whiteList = ['/search', '/login', '/register', '/forgetPassWord'];
 
 router.beforeEach((to, from, next) => {
     NProgress.start();

@@ -50,7 +50,7 @@ export default new Vuex.Store({
             actions: dicjs.actions,
             getters: dicjs.getters
         },
-        wsMesStore: {
+        wsStore: {
             namespaced: true,
             state: wsMesjs.state,
             mutations: wsMesjs.mutations,

@@ -10,8 +10,9 @@
     <title>
         <%= htmlWebpackPlugin.options.title %>
     </title>
-    <link rel="stylesheet" href="/css/index.min.css?v=<%= htmlWebpackPlugin.options.date %>">
-    <link rel="stylesheet" href="/css/nprogress.min.css?v=<%= htmlWebpackPlugin.options.date %>">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.15.14/lib/theme-chalk/index.css">
+    <link rel="prefetch" href="https://unpkg.com/element-ui@2.15.14/lib/theme-chalk/fonts/element-icons.woff" >
+    <link rel="stylesheet" href="https://unpkg.com/nprogress@0.2.0/nprogress.css">
     <link rel="stylesheet" href="/css/wangEditor.min.css?v=<%= htmlWebpackPlugin.options.date %>">
     <link rel="stylesheet" href="/css/myCss.css?v=<%= htmlWebpackPlugin.options.date %>">
 
@@ -30,19 +31,22 @@
 </div>
 
 <!-- built files will be auto injected -->
-<script type="text/javascript" src="/js/vue.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
-<script type="text/javascript" src="/js/vuex.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
-<script type="text/javascript" src="/js/vue-router.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
-<script type="text/javascript" src="/js/axios.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
-<script type="text/javascript" src="/js/index.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
-<script type="text/javascript" src="/js/nprogress.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<script src="https://unpkg.com/vue@2.7.16/dist/vue.min.js"></script>
+<script src="https://unpkg.com/vuex@3.6.2/dist/vuex.min.js"></script>
+<script src="https://unpkg.com/vue-router@3.6.5/dist/vue-router.min.js"></script>
+<script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+<script src="https://unpkg.com/axios@0.21.4/dist/axios.min.js"></script>
+<script src="https://unpkg.com/element-ui@2.15.14/lib/index.js"></script>
+
+
 <script type="text/javascript" src="/js/wangEditor.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
 <script type="text/javascript" src="/js/echarts.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
 <script type="text/javascript" src="/js/vue-baidu-map.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
 <script type="text/javascript" src="/js/sockjs.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
 <script type="text/javascript" src="/js/stomp.min.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
-<% if (process.env.NODE_ENV=='production' ) { %>
 <script type="text/javascript" src="/js/myJs.js?v=<%= htmlWebpackPlugin.options.date %>"></script>
+<% if (process.env.NODE_ENV=='production' ) { %>
+
 <% } %>
 </body>
 

@@ -11,7 +11,7 @@
                     </el-header>
                     <el-main>
                         <transition name="el-zoom-in-top">
-                            <router-view :key="$route.fullPath"/>
+                            <router-view :key="$route.fullPath" />
                         </transition>
                     </el-main>
                 </el-container>
@@ -24,100 +24,102 @@
 </template>
 
 <script>
-    import zfjHeader from './components/zfjHeader'
-    import zfjHeaderMenu from './components/zfjHeaderMenu'
-    import zfjFooter from './components/zfjFooter'
+import zfjHeader from './components/zfjHeader'
+import zfjHeaderMenu from './components/zfjHeaderMenu'
+import zfjFooter from './components/zfjFooter'
 
 
-    export default {
-        name: "container",
-        components: {
-            zfjHeader,
-            zfjHeaderMenu,
-            zfjFooter
+export default {
+    name: "container",
+    components: {
+        zfjHeader,
+        zfjHeaderMenu,
+        zfjFooter
+    },
+    props: {},
+    methods: {
+        init() {
+
         },
-        props: {},
-        methods: {
-            init() {
+    },
+    computed: {
+        token() {
+            return this.$store.state.token;
+        },
+    },
+    watch: {
+        token: {
+            handler(newValue, oldValue) {
 
             },
+            deep: true,
         },
-        computed: {
-            token() {
-                return this.$store.state.token;
-            },
-        },
-        watch: {
-            token: {
-                handler(newValue, oldValue) {
+    },
+    data() {
+        return {
+            name: 'container',
+        }
+    },
+    created() {
+        console.log('container created')
+    },
+    mounted() {
+        console.log('container mounted')
+        this.init();
+    },
+    beforeDestroy() {
+        console.log('container beforeDestroy')
 
-                },
-                deep: true,
-            },
-        },
-        data() {
-            return {
-                name: 'container',
-            }
-        },
-        created() {
-            console.log('container created')
-        },
-        mounted() {
-            console.log('container mounted')
-            this.init();
-        },
-        beforeDestroy() {
-            console.log('container beforeDestroy')
+    },
 
-        },
-
-    }
+}
 </script>
 
 <style scoped>
-    .el-menu {
+.el-menu {
+    padding: 0;
+    margin: 0;
+}
 
-    }
+.el-header {
+    padding: 0;
+    margin: 0;
+}
 
-    .el-header {
-        padding: 0;
-        margin: 0;
-    }
+.el-main {
+    padding: 0;
+    margin: 0;
+}
 
-    .el-main {
-        padding: 0;
-        margin: 0;
-    }
+.el-footer {
+    padding: 0;
+    margin: 0;
+}
 
-    .el-footer {
-        padding: 0;
-        margin: 0;
-    }
+.a_container {
+    padding: 0;
+    margin: 0; 
+}
 
-    .a_container {
+.h_container {
+    height: 60px;
+    width: 980px;
+}
 
-    }
+.nav_container {
+    background: none repeat scroll 0 0 #88C6E5;
+    height: 60px;
+    width: 980px;
+    overflow: hidden;
+    margin: auto auto;
+}
 
-    .h_container {
-        height: 61px;
-        width: 980px;
-    }
+.m_container {
 
-    .nav_container {
-        background: none repeat scroll 0 0 #88C6E5;
-        height: 60px;
-        width: 980px;
-        overflow: hidden;
-        margin: auto auto;
-    }
+    min-height: 600px;
+}
 
-    .m_container {
+.f_container {
 
-        min-height: 600px;
-    }
-
-    .f_container {
-
-    }
+}
 </style>

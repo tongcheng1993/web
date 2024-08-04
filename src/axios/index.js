@@ -2,16 +2,16 @@
 // import axios from 'axios'
 
 import store from '../store/index.js'
+let axiosOne = axios.create();
+let axiosFile = axios.create();
+axiosOne.defaults.timeout = 150000;
 
-axios.defaults.timeout = 150000;
-
-axios.interceptors.response.use(response => {
+axiosOne.interceptors.response.use(response => {
     if (response.data.code === 20000) {
         // 页面没有提醒 方法有返回内容
         if (response.data.success) {
             return response.data.result;
         } else {
-            // 页面有提醒 方法有返回内容 例如：用户名密码错误  在页面上提醒后 在err中返回提醒，方法catch到提醒后将登录按钮重置为可点击状态
             ELEMENT.Message({
                 showClose: true,
                 message: response.data.message,
@@ -22,21 +22,19 @@ axios.interceptors.response.use(response => {
     } else if (response.data.code === 30000) {
         ELEMENT.Message({
             showClose: true,
-            message: response.data.message,
+            message: "丢失身份信息，请重新登陆",
             type: "warning"
         })
-        console.log(response.data.message)
         store.commit("del_token");
         // window.location.reload();
         return Promise.reject(response.data.message)
     } else if (response.data.code === 40000) {
         ELEMENT.Message({
             showClose: true,
-            message: "登陆时间超时，重新登陆",
+            message: "访问接口验证身份权限不足，请申请权限",
             type: "warning"
         })
-        console.log(response.data.message)
-        store.commit("del_token");
+        // store.commit("del_token");
         // window.location.reload();
         return Promise.reject(response.data.message)
     } else if (response.data.code === 50000) {
@@ -49,10 +47,19 @@ axios.interceptors.response.use(response => {
         // window.location.reload();
         return Promise.reject(response.data.message)
     } else {
+        ELEMENT.Message({
+            showClose: true,
+            message: "未知问题",
+            type: "warning"
+        })
         return Promise.reject(response.data.message)
     }
 }, error => {
-    console.log(error);
+    ELEMENT.Message({
+        showClose: true,
+        message: "未知问题" + error,
+        type: "warning"
+    })
     return Promise.reject(error)
 });
 
@@ -60,7 +67,7 @@ axios.interceptors.response.use(response => {
 export const get = (url, parameter) => {
     let token = store.state.token;
     if (token) {
-        return axios({
+        return axiosOne({
             url: url,
             method: 'get',
             params: parameter,
@@ -69,7 +76,7 @@ export const get = (url, parameter) => {
             }
         })
     } else {
-        return axios({
+        return axiosOne({
             url: url,
             method: 'get',
             params: parameter,
@@ -82,45 +89,96 @@ export const get = (url, parameter) => {
 export const postForm = (url, parameter) => {
     let token = store.state.token;
     if (token) {
-        return axios({
+        return axiosOne({
             url: url,
             method: 'post',
             params: parameter,
             headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
                 'Tc-Token': token
             }
         })
     } else {
-        return axios({
+        return axiosOne({
             url: url,
             method: 'post',
             params: parameter,
-            headers: {}
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        })
+    }
+};
+
+export const postFormFile = (url, parameter) => {
+    let token = store.state.token;
+    if (token) {
+        return axiosOne({
+            url: url,
+            method: 'post',
+            data: parameter,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Tc-Token': token
+            }
+        })
+    } else {
+        return axiosOne({
+            url: url,
+            method: 'post',
+            data: parameter,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+    }
+
+}
+
+export const postJson = (url, parameter) => {
+    let token = store.state.token;
+    if (token) {
+        return axiosOne({
+            url: url,
+            method: 'post',
+            data: parameter,
+            headers: {
+                'Content-Type': 'application/json',
+                'Tc-Token': token
+            }
+        })
+    } else {
+        return axiosOne({
+            url: url,
+            method: 'post',
+            data: parameter,
+            headers: {
+                'Content-Type': 'application/json',
+            }
         })
     }
 };
 
 
-export const postJson = (url, parameter) => {
+
+
+export const downFile = (url, parameter) => {
     let token = store.state.token;
     if (token) {
-        return axios({
+        return axiosFile({
             url: url,
             method: 'post',
             data: parameter,
             headers: {
-                'Content-Type': 'application/json',
                 'Tc-Token': token
             }
         })
     } else {
-        return axios({
+        return axiosFile({
             url: url,
             method: 'post',
             data: parameter,
-            headers: {
-                'Content-Type': 'application/json',
-            }
+            headers: {}
         })
     }
 };
