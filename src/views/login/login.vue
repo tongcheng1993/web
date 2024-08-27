@@ -4,18 +4,20 @@
             <el-form :model="loginForm" ref="form" label-width="120px" :label-position="right">
                 <el-form-item label="账户名：">
                     <el-input prefix-icon="el-icon-user" type="text" v-model="loginForm.userName" clearable
-                              placeholder="请输入账户名"></el-input>
+                        placeholder="请输入账户名"></el-input>
                 </el-form-item>
                 <el-form-item label="密码：">
                     <el-input prefix-icon="el-icon-lock" type="password" show-password v-model="loginForm.passWord"
-                              clearable placeholder="请输入密码"></el-input>
+                        clearable placeholder="请输入密码"></el-input>
                 </el-form-item>
                 <el-form-item label="验证码：">
                     <el-input prefix-icon="el-icon-picture" v-model="loginForm.redisValue"
-                              placeholder="请输入验证码"></el-input>
+                        placeholder="请输入验证码"></el-input>
                 </el-form-item>
                 <el-form-item label="验证码：">
-                    <img width="280px" :onload="captchaImgLoad" :src="captchaImg" @click="getCaptchaImg" alt="加载验证码失败"/>
+                    <div v-loading="captchaImgLoad">
+                        <img width="280px" :src="captchaImg" @click="getCaptchaImg" alt="加载验证码失败" />
+                    </div>
                 </el-form-item>
                 <el-form-item label="其他：">
                     <el-button type="primary" @click="toForgetPassWordView">忘记密码</el-button>
@@ -31,95 +33,95 @@
 </template>
 
 <script>
-    import {drawCaptcha, login} from "../../api/userApi";
+import { drawCaptcha, login } from "../../api/userApi";
 
-    export default {
-        name: "login",
-        components: {},
-        props: {},
-        methods: {
-            async toNextPage(to, query) {
-                await this.$router.push({
-                    path: to,
-                    query: query,
-                });
-            },
-            init() {
-                this.getCaptchaImg();
-            },
-            getCaptchaImg() {
-                this.captchaImgLoad = true;
-                let parameter = {}
-                drawCaptcha(parameter).then((res) => {
-                    this.loginForm.redisUuid = res.redisUuid;
-                    let url = "data:image/png;base64,";
-                    this.captchaImg = url + res.imgBytes
-                    this.captchaImgLoad = false;
-                }).catch(err=>{
+export default {
+    name: "login",
+    components: {},
+    props: {},
+    methods: {
+        async toNextPage(to, query) {
+            await this.$router.push({
+                path: to,
+                query: query,
+            });
+        },
+        init() {
+            this.getCaptchaImg();
+        },
+        getCaptchaImg() {
+            this.captchaImgLoad = true;
+            let parameter = {}
+            drawCaptcha(parameter).then((res) => {
+                this.loginForm.redisUuid = res.redisUuid;
+                let url = "data:image/png;base64,";
+                this.captchaImg = url + res.imgBytes
+                this.captchaImgLoad = false;
+            }).catch(err => {
 
+            })
+
+        },
+        loginSubmit() {
+            this.loginSubmitLoad = true;
+            let parameter = this.loginForm;
+            login(parameter)
+                .then((res) => {
+                    this.$store.commit("set_token", res)
+                    let toPath = this.$store.state.toPath
+                    let toPathQuery = this.$store.state.toPathQuery
+                    if (toPath) {
+                        this.toNextPage(toPath, toPathQuery)
+                    } else {
+                        this.toNextPage("/", {})
+                    }
                 })
-
-            },
-            loginSubmit() {
-                this.loginSubmitLoad = true;
-                let parameter = this.loginForm;
-                login(parameter)
-                    .then((res) => {
-                        this.$store.commit("set_token", res)
-                        let toPath = this.$store.state.toPath
-                        let toPathQuery = this.$store.state.toPathQuery
-                        if (toPath) {
-                            this.toNextPage(toPath, toPathQuery)
-                        } else {
-                            this.toNextPage("/",{})
-                        }
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        this.loginSubmitLoad = false;
-                        this.getCaptchaImg();
-                    });
-            },
-            toRegisterView() {
-                this.toNextPage("/register",{});
-            },
-            toForgetPassWordView() {
-                this.toNextPage("/forgetPassWord",{});
-            },
+                .catch((error) => {
+                    console.log(error);
+                    this.loginSubmitLoad = false;
+                    this.getCaptchaImg();
+                });
         },
-        computed: {},
-        watch: {},
-        data() {
-            return {
-                name: "login",
-                page: {
-                    total: 0,
-                    current: 0,
-                    size: 10,
-                    orders: [],
-                },
-                captchaImgLoad: false,
-                captchaImg: "",
-                loginSubmitLoad: false,
-                loginForm: {
-                    userName: "",
-                    passWord: "",
-                    redisUuid: "",
-                    redisValue: "",
-                },
-            };
+        toRegisterView() {
+            this.toNextPage("/register", {});
         },
-        mounted() {
-            this.init();
+        toForgetPassWordView() {
+            this.toNextPage("/forgetPassWord", {});
         },
-        beforeDestroy() {
-        },
-    };
+    },
+    computed: {},
+    watch: {},
+    data() {
+        return {
+            name: "login",
+            page: {
+                total: 0,
+                current: 0,
+                size: 10,
+                orders: [],
+            },
+            captchaImgLoad: false,
+            captchaImg: "",
+            loginSubmitLoad: false,
+            loginForm: {
+                userName: "",
+                passWord: "",
+                redisUuid: "",
+                redisValue: "",
+            },
+        };
+    },
+    mounted() {
+        this.init();
+    },
+    beforeDestroy() {
+    },
+};
 </script>
 
 <style scoped>
-    .login_form {
-        width: 400px;
-        margin: 0 auto;
-    }
+.login_form {
+    width: 400px;
+    margin: 0 auto;
+}
 </style>

@@ -1,28 +1,58 @@
-html, body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, table, td, th, img, div, dl, dt, dd, input, select, form, fieldset {
-    margin: auto;
+html,
+body,
+ul,
+ol,
+li,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+table,
+td,
+th,
+img,
+div,
+dl,
+dt,
+dd,
+input,
+select,
+form,
+fieldset {
+    margin: 0;
     padding: 0;
     border: none;
 }
 
+html {
+    margin: 0;
+    padding: 0;
+    border: none;
+    height: 100%;
+    width: 100%;
+}
 
 body {
     background-color: rgb(233, 250, 255);
     color: rgb(85, 85, 85);
     font-family: 宋体, serif;
-    font-size: 12px;
-    margin: 0 auto;
-
-    /*overflow: visible;*/
-    /*overflow: hidden;*/
-    /*overflow: scroll;*/
-    /* overflow: auto; */
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    height: 100%;
+    width: 100%;
+    overflow: scroll;
 }
 
 
 .view_div {
-
-
+    margin: 0;
+    padding: 0;
+    border: none;
+    height: 100%;
+    width: 100%;
 }
-
-
-

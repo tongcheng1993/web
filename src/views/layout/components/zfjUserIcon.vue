@@ -6,9 +6,9 @@
                 <el-button type="primary" icon="el-icon-user" circle></el-button>
             </el-badge>
             <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item v-if="!token" @click.native="toLoginView()">去登陆</el-dropdown-item>
-                <el-dropdown-item v-if="token" @click.native="toUserInfoView()">账户信息</el-dropdown-item>
-                <el-dropdown-item v-if="token" @click.native="removeToken()">退出系统</el-dropdown-item>
+                <el-dropdown-item v-if="!token" @click.native="toLoginView">去登陆</el-dropdown-item>
+                <el-dropdown-item v-if="token" @click.native="toUserInfoView">账户信息</el-dropdown-item>
+                <el-dropdown-item v-if="token" @click.native="removeToken">退出系统</el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
     </div>

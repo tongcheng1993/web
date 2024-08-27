@@ -6,10 +6,10 @@
             </el-button>
         </div>
         <div>
-            <el-input v-model="page.key" placeholder="请输入内容"></el-input>
+            <el-input v-model="page.keyword" placeholder="请输入内容"></el-input>
             <el-button @click="queryPageData">搜索</el-button>
         </div>
-        <div v-if="page.records.length > 0">
+        <div v-if="showFlag">
             <el-table ref="dataTable" :data="page.records" v-loading="tableLoading" @row-click="openDetail"
                 :show-header="false">
 
@@ -46,34 +46,12 @@ export default {
         token() {
             return this.$store.state.token;
         },
+        showFlag() {
+            return this.page.records.length > 0;
+        },
     },
     watch: {},
-    mounted() {
 
-    },
-    beforeDestroy() {
-
-    },
-    data() {
-        return {
-            name: "dashboard",
-            tableLoading: false,
-            page: {
-                total: 0,
-                current: 1,
-                size: 20,
-                orders: [],
-                records: [
-                    {
-                        title: "标题",
-                        path: "http://www.baidu.com",
-                    }
-                ],
-                key: "",
-
-            },
-        };
-    },
     methods: {
         async toNextPage(to, query) {
             await this.$router.push({
@@ -106,6 +84,29 @@ export default {
         },
     },
 
+    data() {
+        return {
+            name: "dashboard",
+            tableLoading: false,
+            page: {
+                total: 0,
+                current: 1,
+                size: 20,
+                orders: [],
+                records: [
+
+                ],
+                keyword: "",
+
+            },
+        };
+    },
+    mounted() {
+
+    },
+    beforeDestroy() {
+
+    },
 };
 </script>
 

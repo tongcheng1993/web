@@ -24,7 +24,7 @@
 </script>
 <style>
     #app {
-        width: 980px;
+       
     }
 
 </style>

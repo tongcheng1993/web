@@ -1,25 +1,23 @@
 <template>
     <div class="view_div">
-        <div>
-            <el-container class="a_container">
-                <el-header class="h_container">
-                    <zfj-header></zfj-header>
+        <el-container class="a_container">
+            <el-header class="h_container">
+                <zfj-header></zfj-header>
+            </el-header>
+            <el-container class="m_container">
+                <el-header class="nav_container">
+                    <zfj-header-menu></zfj-header-menu>
                 </el-header>
-                <el-container class="m_container">
-                    <el-header class="nav_container">
-                        <zfj-header-menu></zfj-header-menu>
-                    </el-header>
-                    <el-main>
-                        <transition name="el-zoom-in-top">
-                            <router-view :key="$route.fullPath" />
-                        </transition>
-                    </el-main>
-                </el-container>
-                <el-footer class="f_container">
-                    <zfj-footer></zfj-footer>
-                </el-footer>
+                <el-main>
+                    <transition name="el-zoom-in-top">
+                        <router-view :key="$route.fullPath" />
+                    </transition>
+                </el-main>
             </el-container>
-        </div>
+            <el-footer class="f_container">
+                <zfj-footer></zfj-footer>
+            </el-footer>
+        </el-container>
     </div>
 </template>
 
@@ -98,28 +96,29 @@ export default {
 
 .a_container {
     padding: 0;
-    margin: 0; 
+    margin: 0 auto;
+    width: 900px;
+
 }
 
 .h_container {
-    height: 60px;
-    width: 980px;
+    padding: 0;
+    margin: 0;
 }
 
 .nav_container {
-    background: none repeat scroll 0 0 #88C6E5;
-    height: 60px;
-    width: 980px;
-    overflow: hidden;
-    margin: auto auto;
+    padding: 0;
+    margin: 0;
 }
 
 .m_container {
 
-    min-height: 600px;
+    padding: 0;
+    margin: 0;
 }
 
 .f_container {
-
+    padding: 0;
+    margin: 0;
 }
 </style>
